@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  
-    <!-- Primary Meta Tags -->
+    <meta charset="UTF-8">
+
     <title>ReformEat | A Design Project to Reformat Everyday Eating</title>
     <link rel="stylesheet" href="styles.css">
     <meta name="description" content="ReformEat revolutionizes food design by offering a system that can fabricate snacks from scratch.">
@@ -12,29 +11,23 @@
     <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Open Graph Meta Tags (for social media) -->
     <meta property="og:title" content="ReformEat | 3D-Printed Sustainable Food Solutions">
     <meta property="og:description" content="Experience the future of food with ReformEat’s zero-waste food fabrication system.">
     <meta property="og:image" content="https://reformeat.com/assets/featured-image.jpg">
     <meta property="og:url" content="https://reformeat.com">
     <meta property="og:type" content="website">
-    
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ReformEat | A Design Project to Reformat Everyday Eating">
     <meta name="twitter:description" content="Experience the future of food with ReformEat’s zero-waste food fabrication system.">
     <meta name="twitter:image" content="https://reformeat.com/assets/featured-image.jpg">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://reformeat.com">
 
-    <!-- Favicon -->
-     <link rel="icon" href="../favicon.png" type="image/png">
-  
-    <!-- Apple Touch Icon -->
+    <link rel="icon" href="../favicon.png" type="image/png">
+
     <link rel="apple-touch-icon" href="../favicon-180x180.png">
-  
-    <!-- Optional for higher resolution screens -->
+
     <link rel="icon" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="icon" sizes="48x48" href="/favicons/favicon-48x48.png">
@@ -45,7 +38,6 @@
     <meta name="apple-mobile-web-app-title" content="ReformEat" />
     <link rel="manifest" href="/favicons/site.webmanifest" />
 
-    <!-- Schema Markup for SEO (JSON-LD) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -67,44 +59,67 @@
         }
     }
     </script>
-
 </head>
 
-
-<body class="koth">
-  <div class="loading-screen">
-    <img src="../logos/reformload.gif" alt="Loading...">
-  </div>
-
-  <!-- Top Banner -->
-  <div class="top-banner">
-    <div class="logo">
-      <a href="/" class="logo-link">
-        <img 
-          src="../logos/reformstatic.png" 
-          data-gif="../logos/reform.png" 
-          data-duration="1400"
-          alt="Logo" 
-          class="logo-img"
-        >
-      </a>
+<body class="light-mode loaded">
+    <div class="loading-screen">
+        <img src="../logos/reformload.gif" alt="Loading...">
     </div>
-    <div class="menu">
-      <a href="#Connect">Connect</a>
+
+    <div class="top-banner">
+        <div class="logo">
+            <a href="/" class="logo-link">
+                <img
+                    src="../logos/reformstatic.png"
+                    data-gif="../logos/reform.png"
+                    data-duration="1400"
+                    alt="Logo"
+                    class="logo-img"
+                >
+            </a>
+        </div>
+        <div class="menu">
+            <a href="/" class="active">Home</a>
+            <a href="/progress">Progress</a>
+            <a href="/contact">Get in Touch</a>
+            <button id="theme-toggle" class="theme-toggle-button">Dark Mode</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Page Content -->
+    <div class="nutrition-text">
+        Nutrition Reformatted
+    </div>
 
- <div class="cooking-text">
-    Something Is Cooking
-  </div>
- <div class="later-text">
-    Come Back Later!
-  </div>
-  <footer class="footer-text">
-    © 2025 ReformEat. All rights reserved.
-  </footer>
+    <footer class="footer-text">
+        © 2025 ReformEat. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const loadingScreen = document.querySelector('.loading-screen');
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.textContent = 'Light Mode';
+            }
+
+            themeToggle.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                themeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            });
+
+            // Simulate loading (replace with actual loading logic if needed)
+            setTimeout(() => {
+                loadingScreen.classList.remove('loaded');
+            }, 1000); // Adjust time as needed
+        });
+    </script>
+    <script src="main.js"></script>
 </body>
-<script src="main.js"></script>
 </html>
