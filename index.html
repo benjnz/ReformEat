@@ -59,19 +59,20 @@
         }
     }
     </script>
+    
 </head>
 
 <body class="light-mode loaded">
     <div class="loading-screen">
-        <img src="../logos/reformload.gif" alt="Loading...">
+        <img src="../logos/reformeat.png" alt="Loading...">
     </div>
 
     <div class="top-banner">
         <div class="logo">
             <a href="/" class="logo-link">
                 <img
-                    src="../logos/reformstatic.png"
-                    data-gif="../logos/reform.png"
+                    src="../logos/reformeat.png"
+                    data-gif="../logos/reformeat.png"
                     data-duration="1400"
                     alt="Logo"
                     class="logo-img"
@@ -82,12 +83,19 @@
             <a href="/" class="active">Home</a>
             <a href="/progress">Progress</a>
             <a href="/contact">Get in Touch</a>
-            <button id="theme-toggle" class="theme-toggle-button">Dark Mode</button>
+            <button id="theme-toggle" class="theme-toggle-button"></button>
         </div>
     </div>
 
     <div class="nutrition-text">
         Nutrition Reformatted
+    </div>
+
+    <div class="cooking-text">
+        Something Is Cooking
+    </div>
+    <div class="later-text">
+        Come Back Later!
     </div>
 
     <footer class="footer-text">
@@ -104,13 +112,11 @@
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 body.classList.add('dark-mode');
-                themeToggle.textContent = 'Light Mode';
             }
 
             themeToggle.addEventListener('click', function () {
                 body.classList.toggle('dark-mode');
                 const isDarkMode = body.classList.contains('dark-mode');
-                themeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
                 localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
             });
 
