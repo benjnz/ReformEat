@@ -9,6 +9,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative; /* Needed for absolute positioning of nutrition text */
         }
         body.dark-mode {
             background-color: #121212;
@@ -50,22 +51,59 @@
         .theme-toggle-button {
             background: none;
             border: none;
-            color: #333;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: color 0.3s ease, background-color 0.3s ease;
+            font-size: 0; /* Hide text */
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: relative;
+            transition: background-color 0.3s ease;
+            overflow: hidden; /* Clip the icons */
         }
-        .dark-mode .theme-toggle-button {
-            color: #eee;
+        .theme-toggle-button:focus {
+            outline: none;
         }
-        .theme-toggle-button:hover {
-            background-color: #ddd;
+        .theme-toggle-button::before {
+            content: "☀️"; /* Sun icon */
+            font-size: 20px;
+            display: block;
+            line-height: 30px;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #ffc107; /* Yellow for the sun */
+            transition: transform 0.3s ease;
         }
-        .dark-mode .theme-toggle-button:hover {
-            background-color: #333;
+        .dark-mode .theme-toggle-button::before {
+            transform: translateY(-100%);
+        }
+        .theme-toggle-button::after {
+            content: "🌙"; /* Moon icon */
+            font-size: 20px;
+            display: block;
+            line-height: 30px;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #eee; /* Light color for the moon */
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .dark-mode .theme-toggle-button::after {
+            transform: translateY(0);
+        }
+        .cooking-text, .later-text {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 100px; /* Adjust as needed */
+            color: #555;
+        }
+        .dark-mode .cooking-text, .dark-mode .later-text {
+            color: #aaa;
+        }
+        .later-text {
+            margin-top: 20px;
         }
         .nutrition-text {
             font-size: 8vw;
@@ -75,6 +113,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
+            z-index: -1; /* Ensure it's behind other content if needed */
         }
         .dark-mode .nutrition-text {
             color: white;
@@ -115,7 +154,9 @@
             opacity: 0;
             visibility: hidden;
         }
-        .cooking-text, .later-text {
-            display: none; /* Hide these as requested */
+        
+        .dark-mode .nutrition-text {
+            color: white;
         }
+
     </style>
