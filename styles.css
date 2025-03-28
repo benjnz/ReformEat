@@ -1,4 +1,3 @@
-<style>
         @font-face {
     font-family: "Eina Regular";
     src: url("/fonts/eina-01-regular.ttf") format("truetype");
@@ -18,7 +17,7 @@
 body {
     font-family: "Eina Regular", Arial, sans-serif; /* Always provide fallback fonts */
             margin: 0;
-            padding: 0;
+
             background-color: #fff;
             color: #000;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -28,152 +27,175 @@ body {
             position: relative; /* Needed for absolute positioning of nutrition text */
         }
         
-        }
-        body.dark-mode {
-            background-color: #121212;
-            color: #fff;
-        }
-        .top-banner {
-            background-color: #f0f0f0;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-        .dark-mode .top-banner {
-            background-color: #212121;
-        }
-        .logo-link {
-            display: inline-block;
-        }
-        .logo-img {
-            height: 30px;
-            transition: opacity 0.3s ease; /* Optional: for a smoother transition */
-        }
-        .menu {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-        .dark-mode .menu a {
-            color: #eee;
-        }
-        .menu a.active {
-            color: #00cb31;
-        }
-        .theme-toggle-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0; /* Hide text */
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            position: relative;
-            transition: background-color 0.3s ease;
-            overflow: hidden; /* Clip the icons */
-        }
-        .theme-toggle-button:focus {
-            outline: none;
-        }
-        .theme-toggle-button::before {
-            content: "☀️"; /* Sun icon */
-            font-size: 20px;
-            display: block;
-            line-height: 30px;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            color: #ffc107; /* Yellow for the sun */
-            transition: transform 0.3s ease;
-        }
-        .dark-mode .theme-toggle-button::before {
-            transform: translateY(-100%);
-        }
-        .theme-toggle-button::after {
-            content: "🌙"; /* Moon icon */
-            font-size: 20px;
-            display: block;
-            line-height: 30px;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            color: #eee; /* Light color for the moon */
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        .dark-mode .theme-toggle-button::after {
-            transform: translateY(0);
-        }
-        .nutrition-text {
-            font-size: 8vw;
-            font-weight: bold;
-            white-space: nowrap;
-            color: #000; /* Default light mode color */
-            transition: color 0.3s ease;
-            order: 1; /* Place above loading screen initially */
-        }
-        .dark-mode .nutrition-text {
-            color: white;
-        }
-        .loading-screen {
-            order: 2; /* Place below nutrition text */
-        }
-        .cooking-text, .later-text {
-            text-align: center;
-            font-size: 1.5em;
-            color: #555;
-            transition: color 0.3s ease;
-            order: 3; /* Place below loading screen */
-        }
-        .dark-mode .cooking-text, .dark-mode .later-text {
-            color: #aaa;
-        }
-        .later-text {
-            margin-top: 20px;
-        }
-        .footer-text {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
-            color: #777;
-            margin-top: auto;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-        }
-        .dark-mode .footer-text {
-            color: #bbb;
-        }
-        .loading-screen {
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-out, background-color 0.3s ease;
-            width: 100%; /* Take full width */
-            padding: 40px 0; /* Add some padding around the GIF */
-        }
-        .dark-mode .loading-screen {
-            background: #121212;
-        }
-        .loading-screen img {
-            max-width: 200px;
-        }
-        .loaded .loading-screen {
-            opacity: 0;
-            visibility: hidden;
-        }
-    </style>
+body.dark-mode {
+    background-color: #000000;
+    color: #fff;
+}
+.top-banner {
+    background-color: #f0f0f0;
+    padding: 2vw 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.dark-mode .top-banner {
+    background-color: #000000;
+}
+.logo-link {
+    display: inline-block;
+}
+.logo-img {
+    height: 2vw;
+    margin-left: 5vw;
+
+    transition: opacity 0.3s ease; /* Optional: for a smoother transition */
+}
+.menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 1vw;
+    justify-content: center; /* Center the menu items horizontally */
+    width: 100%; /* Ensure it takes full width to center properly */
+    margin-right: 10%;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+.dark-mode .menu a {
+    color: #eee;
+}
+.menu a.active {
+    color: #00cb31;
+}
+
+.theme-toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0; /* Hide text */
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle-button:focus {
+    outline: none;
+}
+
+.theme-toggle-button__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle-button__sun img {
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
+}
+
+.theme-toggle-button__moon img {
+    width: 20px;
+    height: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.dark-mode .theme-toggle-button__sun img {
+    transform: translateY(-100%);
+}
+
+.dark-mode .theme-toggle-button__moon img {
+    transform: translateY(0);
+}
+
+.nutrition-text {
+    font-size: 8vw;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #000; /* Default light mode color */
+    transition: color 0.3s ease;
+    order: 1; /* Place above loading screen initially */
+    text-align: center; /* Center the text horizontally */
+    width: 100%; /* Ensure it takes full width to center properly */
+    position: relative; /* Establish a stacking context */
+    z-index: 10; /* Ensure it's above the menu */
+    padding-top: 10vw; /* Add top padding to push it down (adjust as needed) */
+    /* OR */
+    /* margin-top: 100px; /* Add top margin to push it down (adjust as needed) */
+}
+
+
+
+.dark-mode .nutrition-text {
+    color: white;
+}
+.loading-screen {
+    order: 2; /* Place below nutrition text */
+}
+.cooking-text, .later-text {
+    text-align: center;
+    font-size: 1.5vw;
+    color: #555;
+    transition: color 0.3s ease;
+    order: 3; /* Place below loading screen */
+}
+.dark-mode .cooking-text, .dark-mode .later-text {
+    color: #aaa;
+}
+.later-text {
+    margin-top: 20px;
+}
+.footer-text {
+    text-align: center;
+    padding: 15px 0px;
+    font-size:1.5vw;
+    color: #777;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.dark-mode .footer-text {
+    color: #bbb;
+}
+.loading-screen {
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out, background-color 0.3s ease;
+    width: 100%; /* Take full width */
+    padding: 40px 0; /* Add some padding around the GIF */
+
+}
+.dark-mode .loading-screen {
+    background: #00000000;
+}
+.loading-screen img {
+    max-width: 200px;
+    width: 20vw;
+}
+.loaded .loading-screen {
+    opacity: 100%
+    visibility: hidden;
+}
+
