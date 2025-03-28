@@ -112,17 +112,23 @@
             const themeToggle = document.getElementById('theme-toggle');
             const body = document.body;
             const logoImg = document.getElementById('logo-img');
-            const lightLogo = '/logos/ReformEatBlack.png'; // Path to your light mode logo
-            const darkLogo = '/logos/ReformEatWhite.png'; // Path to your dark mode logo (replace with your actual filename)
+            const lightLogo = '/logos/ReformEatBlack.png';
+            const darkLogo = '/logos/ReformEatWhite.png';
             const loadingScreen = document.querySelector('.loading-screen');
+            const sunIcon = document.querySelector('.theme-toggle-button__sun');
+            const moonIcon = document.querySelector('.theme-toggle-button__moon');
 
             // Check for saved theme preference and set initial logo
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 body.classList.add('dark-mode');
                 logoImg.src = darkLogo;
+                sunIcon.style.transform = 'translateY(-100%)';
+                moonIcon.style.transform = 'translateY(0)';
             } else {
                 logoImg.src = lightLogo;
+                sunIcon.style.transform = 'translateY(0)';
+                moonIcon.style.transform = 'translateY(100%)';
             }
 
             themeToggle.addEventListener('click', function () {
@@ -133,15 +139,19 @@
                 // Update logo source based on the theme
                 if (isDarkMode) {
                     logoImg.src = darkLogo;
+                    sunIcon.style.transform = 'translateY(-100%)';
+                    moonIcon.style.transform = 'translateY(0)';
                 } else {
                     logoImg.src = lightLogo;
+                    sunIcon.style.transform = 'translateY(0)';
+                    moonIcon.style.transform = 'translateY(100%)';
                 }
             });
 
             // Simulate loading (replace with actual loading logic if needed)
             setTimeout(() => {
                 loadingScreen.classList.remove('loaded');
-            }, 1000); // Adjust time as needed
+            }, 1000);
         });
     </script>
     <script src="main.js"></script>
