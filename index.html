@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -26,7 +27,7 @@
 
     <link rel="icon" href="/favicon.png" type="image/png">
 
-    <link rel="apple-touch-icon" href="/favicon-180x180.png">
+    <link rel="apple-touch-icon" href="../favicon-180x180.png">
 
     <link rel="icon" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" sizes="16x16" href="/favicons/favicon-16x16.png">
@@ -59,47 +60,47 @@
         }
     }
     </script>
-   
+
 </head>
 
 <body class="light-mode loaded">
     <div class="top-banner">
         <div class="logo">
             <a href="/" class="logo-link">
-                <img
-                    id="logo-img"
-                    src="/logos/ReformEatBlack.png"
-                    data-gif="/logos/ReformEatBlack.png"
-                    data-duration="1400"
-                    alt="Logo"
-                    class="logo-img"
-                >
+                <img id="logo-img" src="/logos/ReformEatBlack.png" data-gif="/logos/ReformEatBlack.png" data-duration="1400"
+                    alt="Logo" class="logo-img">
             </a>
         </div>
         <div class="menu">
             <a href="/" class="active">Home</a>
             <a href="/progress">Progress</a>
             <a href="/contact">Get in Touch</a>
-             <button id="theme-toggle" class="theme-toggle-button">
-                <span class="theme-toggle-button__icon theme-toggle-button__sun">☀️</span>
-                <span class="theme-toggle-button__icon theme-toggle-button__moon">🌙</span>
+            <button id="theme-toggle" class="theme-toggle-button">
+                <span class="theme-toggle-button__icon theme-toggle-button__sun">
+                    <img src="images/sun.png" alt="Sun">
+                </span>
+                <span class="theme-toggle-button__icon theme-toggle-button__moon">
+                    <img src="images/moon.png" alt="Moon">
+                </span>
             </button>
         </div>
     </div>
 
-    <div class="nutrition-text">
-        Nutrition Reformatted
-    </div>
+    <div class="main-content-wrapper">
+        <div class="nutrition-text">
+            Nutrition Reformatted
+        </div>
 
-    <div class="loading-screen">
-        <img src="/logos/reformload.gif" alt="Loading...">
-    </div>
+        <div class="loading-screen">
+            <img src="/logos/reformload.gif" alt="Loading...">
+        </div>
 
-    <div class="cooking-text">
-        Something Is Cooking
-    </div>
-    <div class="later-text">
-        Come Back Later!
+        <div class="cooking-text">
+            Something Is Cooking
+        </div>
+        <div class="later-text">
+            Come Back Later!
+        </div>
     </div>
 
     <footer class="footer-text">
@@ -112,7 +113,7 @@
             const body = document.body;
             const logoImg = document.getElementById('logo-img');
             const lightLogo = '/logos/ReformEatBlack.png'; // Path to your light mode logo
-            const darkLogo = '/logos/ReformEatWhite.png';    // Path to your dark mode logo (replace with your actual filename)
+            const darkLogo = '/logos/ReformEatWhite.png'; // Path to your dark mode logo (replace with your actual filename)
             const loadingScreen = document.querySelector('.loading-screen');
 
             // Check for saved theme preference and set initial logo
@@ -145,4 +146,5 @@
     </script>
     <script src="main.js"></script>
 </body>
+
 </html>
