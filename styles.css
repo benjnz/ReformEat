@@ -1,6 +1,22 @@
 <style>
-        body {
-            font-family: sans-serif;
+        @font-face {
+    font-family: "Eina Regular";
+    src: url("/fonts/eina-01-regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: "Eina Semi Bold";
+    src: url("/fonts/eina-01-semibold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+body {
+    font-family: "Eina Regular", Arial, sans-serif; /* Always provide fallback fonts */
             margin: 0;
             padding: 0;
             background-color: #fff;
@@ -30,6 +46,7 @@
         }
         .logo-img {
             height: 30px;
+            transition: opacity 0.3s ease; /* Optional: for a smoother transition */
         }
         .menu {
             display: flex;
@@ -154,9 +171,4 @@
             opacity: 0;
             visibility: hidden;
         }
-        
-        .dark-mode .nutrition-text {
-            color: white;
-        }
-
     </style>
