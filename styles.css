@@ -27,6 +27,8 @@ body {
             min-height: 100vh;
             position: relative; /* Needed for absolute positioning of nutrition text */
         }
+        
+        }
         body.dark-mode {
             background-color: #121212;
             color: #fff;
@@ -37,6 +39,10 @@ body {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
         }
         .dark-mode .top-banner {
             background-color: #212121;
@@ -110,11 +116,26 @@ body {
         .dark-mode .theme-toggle-button::after {
             transform: translateY(0);
         }
+        .nutrition-text {
+            font-size: 8vw;
+            font-weight: bold;
+            white-space: nowrap;
+            color: #000; /* Default light mode color */
+            transition: color 0.3s ease;
+            order: 1; /* Place above loading screen initially */
+        }
+        .dark-mode .nutrition-text {
+            color: white;
+        }
+        .loading-screen {
+            order: 2; /* Place below nutrition text */
+        }
         .cooking-text, .later-text {
             text-align: center;
             font-size: 1.5em;
-            margin-top: 100px; /* Adjust as needed */
             color: #555;
+            transition: color 0.3s ease;
+            order: 3; /* Place below loading screen */
         }
         .dark-mode .cooking-text, .dark-mode .later-text {
             color: #aaa;
@@ -122,44 +143,28 @@ body {
         .later-text {
             margin-top: 20px;
         }
-        .nutrition-text {
-            font-size: 8vw;
-            font-weight: bold;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            z-index: -1; /* Ensure it's behind other content if needed */
-        }
-        .dark-mode .nutrition-text {
-            color: white;
-        }
-        .light-mode .nutrition-text {
-            color: black;
-        }
         .footer-text {
             text-align: center;
             padding: 20px;
             font-size: 0.9em;
             color: #777;
             margin-top: auto;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
         }
         .dark-mode .footer-text {
             color: #bbb;
         }
         .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             background: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.5s ease-out, background-color 0.3s ease;
+            width: 100%; /* Take full width */
+            padding: 40px 0; /* Add some padding around the GIF */
         }
         .dark-mode .loading-screen {
             background: #121212;
