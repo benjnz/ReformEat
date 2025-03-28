@@ -81,17 +81,30 @@ body.dark-mode {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0; /* Hide text */
+    font-size: 0;
     padding: 0;
     width: 30px;
     height: 30px;
     border-radius: 50%;
     position: relative;
     transition: background-color 0.3s ease;
+    overflow: hidden;
 }
 
 .theme-toggle-button:focus {
     outline: none;
+}
+
+.theme-toggle-button:hover {
+    background-color: #ddd;
+}
+
+.dark-mode .theme-toggle-button:hover {
+    background-color: #333;
+}
+
+.theme-toggle-button:active {
+    background-color: #ccc;
 }
 
 .theme-toggle-button__icon {
@@ -107,13 +120,12 @@ body.dark-mode {
 }
 
 .theme-toggle-button__sun img {
-    width: 20px; /* Adjust size as needed */
+    width: 2vw;
     height: 20px;
 }
 
 .theme-toggle-button__moon img {
-    width: 20px;
-    height: 20px;
+    width: 2vw;
     transform: translateY(100%);
     transition: transform 0.3s ease;
 }
@@ -197,5 +209,39 @@ body.dark-mode {
 .loaded .loading-screen {
     opacity: 100%
     visibility: hidden;
+}
+
+
+@media (max-width: 768px) {
+
+    .menu {
+        font-size: 2vw;
+    }
+
+    .logo-img {
+    height: 3vw;
+    }
+
+    .nutrition-text {
+    font-size: 6vw;
+    padding-top: 15vw;
+}
+
+    .dark-mode .cooking-text, .dark-mode .later-text {
+    font-size: 3vw;
+
+}
+
+    
+.theme-toggle-button__sun img {
+    width: 4vw;
+    height: 20px;
+}
+
+.theme-toggle-button__moon img {
+    width: 4vw;
+
+}
+
 }
 
