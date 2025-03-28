@@ -64,15 +64,16 @@
 
 <body class="light-mode loaded">
     <div class="loading-screen">
-        <img src="../logos/reformeat.png" alt="Loading...">
+        <img src="../logos/reformeatblack.png" alt="Loading...">
     </div>
 
     <div class="top-banner">
         <div class="logo">
             <a href="/" class="logo-link">
                 <img
-                    src="../logos/reformeat.png"
-                    data-gif="../logos/reformeat.png"
+                    id="logo-img"
+                    src="../logos/reformeatblack.png"
+                    data-gif="../logos/reformeatblack.png"
                     data-duration="1400"
                     alt="Logo"
                     class="logo-img"
@@ -106,18 +107,31 @@
         document.addEventListener('DOMContentLoaded', function () {
             const themeToggle = document.getElementById('theme-toggle');
             const body = document.body;
+            const logoImg = document.getElementById('logo-img');
+            const lightLogo = '../logos/reformeatblack.png'; // Path to your light mode logo
+            const darkLogo = '../logos/reformeatwhite.png';   // Path to your dark mode logo (replace with your actual filename)
             const loadingScreen = document.querySelector('.loading-screen');
 
-            // Check for saved theme preference
+            // Check for saved theme preference and set initial logo
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 body.classList.add('dark-mode');
+                logoImg.src = darkLogo;
+            } else {
+                logoImg.src = lightLogo;
             }
 
             themeToggle.addEventListener('click', function () {
                 body.classList.toggle('dark-mode');
                 const isDarkMode = body.classList.contains('dark-mode');
                 localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+
+                // Update logo source based on the theme
+                if (isDarkMode) {
+                    logoImg.src = darkLogo;
+                } else {
+                    logoImg.src = lightLogo;
+                }
             });
 
             // Simulate loading (replace with actual loading logic if needed)
