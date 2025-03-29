@@ -121,7 +121,7 @@ body.dark-mode {
 
 .theme-toggle-button__sun img {
     width: 2vw;
-    height: 20px;
+    height: auto;
 }
 
 .theme-toggle-button__moon img {
@@ -148,7 +148,7 @@ body.dark-mode {
     text-align: center; /* Center the text horizontally */
     width: 100%; /* Ensure it takes full width to center properly */
     position: relative; /* Establish a stacking context */
-    z-index: 10; /* Ensure it's above the menu */
+    z-index: -100; /* Ensure it's above the menu */
     padding-top: 10vw; /* Add top padding to push it down (adjust as needed) */
     /* OR */
     /* margin-top: 100px; /* Add top margin to push it down (adjust as needed) */
@@ -190,7 +190,7 @@ body.dark-mode {
     color: #bbb;
 }
 .loading-screen {
-    background: #ffffff;
+    backgrounƒd: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
