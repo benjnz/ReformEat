@@ -215,33 +215,62 @@ body.dark-mode {
 @media (max-width: 768px) {
 
     .menu {
-        font-size: 2vw;
+        font-size: 2.5vw;
     }
 
     .logo-img {
-    height: 3vw;
+        height: 3.5vw;
+        margin-left: 5vw;
     }
 
     .nutrition-text {
-    font-size: 6vw;
-    padding-top: 15vw;
+        font-size: 6vw;
+        padding-top: 15vw;
+    }
+
+    .cooking-text,
+    .later-text {
+        font-size: 3vw;
+    }
+
+    .theme-toggle-button__sun img {
+        width: 4vw;
+        height: auto; /* Changed from 20px */
+    }
+
+    .theme-toggle-button__moon img {
+        width: 4vw;
+        height: auto; /* Changed from 20px */
+    }
+
+    .footer-text {
+        font-size: 2vw; /* Adjusted font size */
+        padding: 15px 0;
+    }
+
+    .loading-screen img {
+        width: 40vw; /* Adjusted width */
+    }
+
+    body {
+    font-family: "Eina Regular", Arial, sans-serif;
+    margin: 0;
+    background-color: #fff;
+    color: #000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
 }
 
-    .dark-mode .cooking-text, .dark-mode .later-text {
-    font-size: 3vw;
-
+body.dark-mode {
+    background-color: #000000;
+    color: #fff;
 }
-
     
-.theme-toggle-button__sun img {
-    width: 4vw;
-    height: 20px;
 }
 
-.theme-toggle-button__moon img {
-    width: 4vw;
-
-}
-
-}
 
