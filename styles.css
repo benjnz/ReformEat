@@ -61,7 +61,7 @@ body.dark-mode {
     font-size: 1vw;
     justify-content: center; /* Center the menu items horizontally */
     width: 100%; /* Ensure it takes full width to center properly */
-    margin-right: 10%;
+    margin-right: 15%;
 }
 
 .menu a {
@@ -215,15 +215,16 @@ body.dark-mode {
 @media (max-width: 768px) {
 
     .menu {
-        font-size: 3vw;
-        margin-top: 15vw;
-        margin-left: -55vw;
+        font-size: 4vw;
+        margin-top: 20vw;
+        margin-left: -70vw;
+        min-width: 90%;
     }
 
     .logo-img {
-        margin-top: -20vw;
-        height: 5vw;
-        margin-left: 30vw;
+        margin-top: -200vw;
+        height: 7vw;
+        margin-left: 25vw;
     }
 
     .nutrition-text {
