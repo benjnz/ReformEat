@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <title>ReformEat | A Design Project to Reformat Everyday Eating | Contact</title>
+    <title>ReformEat | A Design Project to Reformat Everyday Eating | Progress</title>
     <link rel="stylesheet" href="../styles.css">
     <meta name="description" content="ReformEat revolutionizes food design by offering a system that can fabricate snacks from scratch.">
     <meta name="keywords" content="3D-printed food, sustainable snacks, food innovation, ReformEat, upcycled ingredients, eco-friendly food, alternative food solutions">
@@ -39,27 +38,6 @@
     <meta name="apple-mobile-web-app-title" content="ReformEat" />
     <link rel="manifest" href="/favicons/site.webmanifest" />
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ReformEat",
-        "url": "https://reformeat.com",
-        "logo": "https://reformeat.com/assets/logo.png",
-        "description": "ReformEat creates innovative 3D-printed food using sustainable and zero-waste ingredients, pioneering the future of food technology.",
-        "sameAs": [
-            "https://www.instagram.com/reformeat",
-            "https://www.linkedin.com/company/reformeat",
-            "https://twitter.com/reformeat"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "info@reformeat.com",
-            "telephone": "+1234567890",
-            "contactType": "customer service"
-        }
-    }
-    </script>
 
 </head>
 
@@ -86,17 +64,9 @@
         </div>
     </div>
 
-    <div class="main-content-wrapper">
-        <div class="loading-screen">
-            <img src="/logos/reformload.gif" alt="Loading...">
-        </div>
-
-        <div class="cooking-text">
-            Something Is Cooking
-        </div>
-        <div class="later-text">
-            Come Back Later!
-        </div>
+    <div class="contact-container">
+        <p class="contact-text">Have a question or want to get in touch?</p>
+        <a href="mailto:your-email@example.com" class="email-button">Email Us</a>
     </div>
 
     <footer class="footer-text">
@@ -105,50 +75,50 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const logoImg = document.getElementById('logo-img');
-    const lightLogo = '../logos/ReformEatBlack.png';
-    const darkLogo = '../logos/ReformEatWhite.png';
-    const loadingScreen = document.querySelector('.loading-screen');
-    const sunIcon = document.querySelector('.theme-toggle-button__sun img'); // Corrected selector
-    const moonIcon = document.querySelector('.theme-toggle-button__moon img'); // Corrected selector
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const logoImg = document.getElementById('logo-img');
+            const lightLogo = '../logos/ReformEatBlack.png';
+            const darkLogo = '../logos/ReformEatWhite.png';
+            const loadingScreen = document.querySelector('.loading-screen');
+            const sunIcon = document.querySelector('.theme-toggle-button__sun img');
+            const moonIcon = document.querySelector('.theme-toggle-button__moon img');
 
-    // Check for saved theme preference and set initial logo
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        logoImg.src = darkLogo;
-        sunIcon.style.transform = 'translateY(-100%)';
-        moonIcon.style.transform = 'translateY(0)';
-    } else {
-        logoImg.src = lightLogo;
-        sunIcon.style.transform = 'translateY(0)';
-        moonIcon.style.transform = 'translateY(100%)';
-    }
+            // Check for saved theme preference and set initial logo
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                logoImg.src = darkLogo;
+                sunIcon.style.transform = 'translateY(-100%)';
+                moonIcon.style.transform = 'translateY(0)';
+            } else {
+                logoImg.src = lightLogo;
+                sunIcon.style.transform = 'translateY(0)';
+                moonIcon.style.transform = 'translateY(100%)';
+            }
 
-    themeToggle.addEventListener('click', function () {
-        body.classList.toggle('dark-mode');
-        const isDarkMode = body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            themeToggle.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 
-        // Update logo source based on the theme
-        if (isDarkMode) {
-            logoImg.src = darkLogo;
-            sunIcon.style.transform = 'translateY(-100%)';
-            moonIcon.style.transform = 'translateY(0)';
-        } else {
-            logoImg.src = lightLogo;
-            sunIcon.style.transform = 'translateY(0)';
-            moonIcon.style.transform = 'translateY(100%)';
-        }
-    });
+                // Update logo source based on the theme
+                if (isDarkMode) {
+                    logoImg.src = darkLogo;
+                    sunIcon.style.transform = 'translateY(-100%)';
+                    moonIcon.style.transform = 'translateY(0)';
+                } else {
+                    logoImg.src = lightLogo;
+                    sunIcon.style.transform = 'translateY(0)';
+                    moonIcon.style.transform = 'translateY(100%)';
+                }
+            });
 
-    // Simulate loading (replace with actual loading logic if needed)
-    setTimeout(() => {
-        loadingScreen.classList.remove('loaded');
-    }, 1000);
-});
+            // Simulate loading (replace with actual loading logic if needed)
+            setTimeout(() => {
+                loadingScreen.classList.remove('loaded');
+            }, 1000);
+        });
     </script>
     <script src="main.js"></script>
 </body>
