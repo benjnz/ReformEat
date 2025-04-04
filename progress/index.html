@@ -86,18 +86,70 @@
         </div>
     </div>
 
-    <div class="main-content-wrapper">
-        <div class="loading-screen">
-            <img src="/logos/reformload.gif" alt="Loading...">
+    <h1>Project Progress</h1>
+
+    <div class="progress-map" id="project-progress">
+        <div class="progress-line"></div>
+        <div class="progress-line-fill" id="progress-fill" style="width: 0%;"></div>
+
+        <div class="step completed">
+            <div class="circle">&#10003;</div>
+            <div class="step-label">Planning</div>
         </div>
 
-        <div class="cooking-text">
-            Something Is Cooking
+        <div class="step in-progress">
+            <div class="circle">2</div>
+            <div class="step-label">Development</div>
         </div>
-        <div class="later-text">
-            Come Back Later!
+
+        <div class="step">
+            <div class="circle">3</div>
+            <div class="step-label">Testing</div>
+        </div>
+
+        <div class="step">
+            <div class="circle">4</div>
+            <div class="step-label">Deployment</div>
+        </div>
+
+        <div class="step">
+            <div class="circle">5</div>
+            <div class="step-label">Launch</div>
         </div>
     </div>
+
+    <script>
+        function updateProgress(completedSteps) {
+            const steps = document.querySelectorAll('.step');
+            const progressFill = document.getElementById('progress-fill');
+            const numSteps = steps.length;
+
+            steps.forEach((step, index) => {
+                step.classList.remove('completed', 'in-progress');
+                const circle = step.querySelector('.circle');
+                circle.innerHTML = index + 1;
+            });
+
+            for (let i = 0; i < completedSteps; i++) {
+                if (i < numSteps) {
+                    steps[i].classList.add('completed');
+                    const circle = steps[i].querySelector('.circle');
+                    circle.innerHTML = '&#10003;';
+                }
+            }
+
+            if (completedSteps < numSteps) {
+                steps[completedSteps].classList.add('in-progress');
+            }
+
+            const progressPercentage = (completedSteps / (numSteps -1)) * 100;
+            progressFill.style.width = `${Math.max(0, Math.min(100, progressPercentage))}%`;
+        }
+
+        // Example usage: Update the progress based on the number of completed steps
+        // Call this function with the number of completed stages (e.g., 1 for planning done, 2 for planning and development done, etc.)
+        updateProgress(1); // Example: Planning is completed
+    </script>
 
     <footer class="footer-text">
         © 2025 ReformEat. All rights reserved.
