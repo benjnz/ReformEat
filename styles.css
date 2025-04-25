@@ -259,9 +259,36 @@ body.dark-mode {
         font-size: 4vw;
         margin-top: 20vw;
         margin-left: -70vw;
+        margin-bottom: -6vw;
         min-width: 90%;
     }
+    .menu {
+    /* Existing styles for your menu */
+    display: flex;
+    gap: 20px; /* Example gap between menu items */
+    justify-content: center; /* Example alignment */
+    padding: 10px 0; /* Example vertical padding */
+    position: relative; /* Needed for absolute positioning of pseudo-elements */
+}
 
+.menu::before{
+    content: ""; /* Required for pseudo-elements to be generated */
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px; /* Adjust for thicker or thinner lines */
+    margin-top: -2vw;
+    background-color: white; /* Set the color of the lines */
+}
+
+.menu::before {
+    top: 0; /* Position the line above the menu */
+}
+
+.menu::after {
+    bottom: 0; /* Position the line below the menu */
+}
+    
     .logo-img {
         margin-top: -200vw;
         height: 7vw;
@@ -327,4 +354,3 @@ body.dark-mode {
 }
     
 }
-
