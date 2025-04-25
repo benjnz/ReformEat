@@ -185,7 +185,6 @@ body.dark-mode {
 .fdi-button-container button {
     font-family: "Eina Semi Bold", Arial, sans-serif;
     font-size: 1vw;
-    display: flex;
     align-items: center; /* Vertically center the button if needed */
     margin-top: 20px; /* Add some space above the button */
     background-color: #000000;
