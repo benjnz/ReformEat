@@ -155,6 +155,52 @@ body.dark-mode {
 }
 
 
+.fdi-button-link {
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    display: inline-block; /* Allows setting width and height like a block, but flows inline */
+    background-color: #00cb31;
+    color: white;
+    padding: 1vw 2vw; /* Adjust padding as needed */
+    text-decoration: none; /* Remove underline from the link */
+    border-radius: 25px; /* Adjust for more or less rounded corners */
+    font-weight: bold; /* Optional: Make the text bold */
+        text-shadow:
+        -0.1px -0.1px 0 black,
+        0.1px -0.1px 0 black,
+        -0.1px 0.1px 0 black,
+        0.1px 0.1px 0 black;
+}
+}
+
+.fdi-button-link:hover {
+    /* Optional: Add a hover effect */
+    background-color: darkgreen;
+}
+
+.fdi-button-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the button */
+    align-items: center; /* Vertically center the button if needed */
+    margin-top: 20px; /* Add some space above the button */
+}
+
+.fdi-button-container button {
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    font-size: 1vw;
+    display: flex;
+    align-items: center; /* Vertically center the button if needed */
+    margin-top: 20px; /* Add some space above the button */
+    background-color: #00cb31;
+    color: #ffffff;
+    padding: 1vw 2vw; /* Adjust padding as needed */
+    text-decoration: none; /* Remove underline from the link */
+    border-radius: 25px; /* Adjust for more or less rounded corners */
+    text-shadow:
+        -0.1px -0.1px 0 black,
+        0.1px -0.1px 0 black,
+        -0.1px 0.1px 0 black,
+        0.1px 0.1px 0 black;
+}
 
 .dark-mode .nutrition-text {
     color: white;
@@ -274,7 +320,11 @@ body.dark-mode {
     background-color: #000000;
     color: #fff;
 }
+
+.fdi-button-container button {
+    font-size: 4vw;
     
 }
-
+    
+}
 
