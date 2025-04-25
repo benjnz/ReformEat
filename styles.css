@@ -95,12 +95,12 @@ body.dark-mode {
     outline: none;
 }
 
-.theme-toggle-button:hover {
+.theme-toggle-button:hover { x
     background-color: #ddd;
 }
 
 .dark-mode .theme-toggle-button:hover {
-    background-color: #333;
+    background-color: #efa6a6;
 }
 
 .theme-toggle-button:active {
@@ -158,18 +158,16 @@ body.dark-mode {
 .fdi-button-link {
     font-family: "Eina Semi Bold", Arial, sans-serif;
     display: inline-block; /* Allows setting width and height like a block, but flows inline */
-    background-color: #00cb31;
-    color: white;
+    background-color: #000000;
+    color: #000000;
     padding: 1vw 2vw; /* Adjust padding as needed */
     text-decoration: none; /* Remove underline from the link */
     border-radius: 25px; /* Adjust for more or less rounded corners */
     font-weight: bold; /* Optional: Make the text bold */
-        text-shadow:
-        -0.1px -0.1px 0 black,
-        0.1px -0.1px 0 black,
-        -0.1px 0.1px 0 black,
-        0.1px 0.1px 0 black;
+    border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
+
 }
+
 }
 
 .fdi-button-link:hover {
@@ -190,16 +188,12 @@ body.dark-mode {
     display: flex;
     align-items: center; /* Vertically center the button if needed */
     margin-top: 20px; /* Add some space above the button */
-    background-color: #00cb31;
+    background-color: #000000;
     color: #ffffff;
     padding: 1vw 2vw; /* Adjust padding as needed */
     text-decoration: none; /* Remove underline from the link */
     border-radius: 25px; /* Adjust for more or less rounded corners */
-    text-shadow:
-        -0.1px -0.1px 0 black,
-        0.1px -0.1px 0 black,
-        -0.1px 0.1px 0 black,
-        0.1px 0.1px 0 black;
+    border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
 }
 
 .dark-mode .nutrition-text {
@@ -216,7 +210,7 @@ body.dark-mode {
     order: 3; /* Place below loading screen */
 }
 .dark-mode .cooking-text, .dark-mode .later-text {
-    color: #aaa;
+    color: #c37373;
 }
 .later-text {
     margin-top: 20px;
@@ -245,6 +239,7 @@ body.dark-mode {
     padding: 40px 0; /* Add some padding around the GIF */
 
 }
+
 .dark-mode .loading-screen {
     background: #00000000;
 }
@@ -321,8 +316,13 @@ body.dark-mode {
     color: #fff;
 }
 
+.fdi-button-link{
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */    
+    }
 .fdi-button-container button {
     font-size: 4vw;
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */
+
     
 }
     
