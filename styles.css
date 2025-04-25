@@ -73,9 +73,6 @@ body.dark-mode {
 .dark-mode .menu a {
     color: #eee;
 }
-.menu a.active {
-    color: #00cb31;
-}
 
 .theme-toggle-button {
     background: none;
