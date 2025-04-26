@@ -32,7 +32,7 @@ body.dark-mode {
     color: #fff;
 }
 .top-banner {
-    background-color: #f0f0f0;
+    background-color: #f0f0f000;
     padding: 2vw 0px;
     display: flex;
     justify-content: space-between;
@@ -152,10 +152,23 @@ body.dark-mode {
 }
 
 
+.dark-mode .fdi-button-link {
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    display: inline-block; /* Allows setting width and height like a block, but flows inline */
+    background-color: #00000000;
+    color: #ffffff;
+    padding: 1vw 2vw; /* Adjust padding as needed */
+    text-decoration: none; /* Remove underline from the link */
+    border-radius: 25px; /* Adjust for more or less rounded corners */
+    font-weight: bold; /* Optional: Make the text bold */
+    border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
+
+}
+
 .fdi-button-link {
     font-family: "Eina Semi Bold", Arial, sans-serif;
     display: inline-block; /* Allows setting width and height like a block, but flows inline */
-    background-color: #000000;
+    background-color: #00000000;
     color: #000000;
     padding: 1vw 2vw; /* Adjust padding as needed */
     text-decoration: none; /* Remove underline from the link */
@@ -184,7 +197,19 @@ body.dark-mode {
     font-size: 1vw;
     align-items: center; /* Vertically center the button if needed */
     margin-top: 20px; /* Add some space above the button */
-    background-color: #000000;
+    background-color: #00000000;
+    color: #000000;
+    padding: 1vw 2vw; /* Adjust padding as needed */
+    text-decoration: none; /* Remove underline from the link */
+    border-radius: 25px; /* Adjust for more or less rounded corners */
+    border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
+}
+.dark-mode .fdi-button-container button {
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    font-size: 1vw;
+    align-items: center; /* Vertically center the button if needed */
+    margin-top: 20px; /* Add some space above the button */
+    background-color: #00000000;
     color: #ffffff;
     padding: 1vw 2vw; /* Adjust padding as needed */
     text-decoration: none; /* Remove underline from the link */
@@ -265,7 +290,7 @@ a.email-button
 
 
 @media (max-width: 768px) {
-
+ 
     .menu {
         font-size: 4vw;
         margin-top: 20vw;
@@ -289,7 +314,7 @@ a.email-button
     right: 0;
     height: 1px; /* Adjust for thicker or thinner lines */
     margin-top: -2vw;
-    background-color: white; /* Set the color of the lines */
+    background-color: #010101; /* Set the color of the lines */
 }
 
 .menu::before {
@@ -354,7 +379,17 @@ body.dark-mode {
     color: #fff;
 }
 
-.fdi-button-link{
+.dark-mode .fdi-button-link{
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */    
+    }
+.dark-mode .fdi-button-container button {
+    font-size: 4vw;
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */
+
+    
+}
+
+ .fdi-button-link{
     border: 1vw solid #00cb31; /* Add a 2px solid white border */    
     }
 .fdi-button-container button {
@@ -367,5 +402,7 @@ body.dark-mode {
 .contact-container{
     font-size: 4vw
 }
+
+
 }
 
