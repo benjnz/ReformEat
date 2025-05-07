@@ -236,6 +236,14 @@ body.dark-mode {
 .later-text {
     margin-top: 20px;
 }
+
+    .info-text {
+    font-size: 1.5vw;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    text-align: center;  
+    }
+
 .footer-text {
     text-align: center;
     padding: 15px 0px;
@@ -334,6 +342,16 @@ a.email-button
     .nutrition-text {
         font-size: 6vw;
         padding-top: 15vw;
+    }
+
+    .info-text {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: -2vw;
+    font-size: 4vw;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    text-align: center;
     }
 
     .cooking-text,
