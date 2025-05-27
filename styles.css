@@ -97,7 +97,7 @@ body.dark-mode {
 }
 
 .dark-mode .theme-toggle-button:hover {
-    background-color: #efa6a6;
+    background-color: #ffe40000;
 }
 
 .theme-toggle-button:active {
