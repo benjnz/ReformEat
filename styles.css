@@ -28,7 +28,7 @@ body {
         }
         
 body.dark-mode {
-    background-color: #000000;
+    background-color: #868686;
     color: #fff;
 }
 .top-banner {
@@ -43,7 +43,7 @@ body.dark-mode {
     width: 100%;
 }
 .dark-mode .top-banner {
-    background-color: #000000;
+    background-color: #868686;
 }
 .logo-link {
     display: inline-block;
@@ -322,7 +322,7 @@ a.email-button
     right: 0;
     height: 1px; /* Adjust for thicker or thinner lines */
     margin-top: -2vw;
-    background-color: #010101; /* Set the color of the lines */
+    background-color: #eaeaea; /* Set the color of the lines */
 }
 
 .menu::before {
@@ -393,7 +393,7 @@ a.email-button
 }
 
 body.dark-mode {
-    background-color: #000000;
+    background-color: #868686;
     color: #fff;
 }
 
