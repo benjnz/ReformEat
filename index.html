@@ -132,7 +132,7 @@
             </style>
     
     <script>
-     document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const logoImg = document.getElementById('logo-img');
@@ -149,8 +149,9 @@
     // --- Theme Toggling Logic ---
 
     // Function to apply theme and update image state
-    function applyTheme(isDarkMode, isQuickTransition = false) { // Added isQuickTransition parameter
-        // Add quick transition class if needed
+    // isQuickTransition: true for theme toggle clicks (0.5s), false for initial load (no explicit image transition needed yet)
+    function applyTheme(isDarkMode, isQuickTransition = false) {
+        // Apply quick transition class if explicitly requested (from theme toggle)
         if (isQuickTransition) {
             body.classList.add('quick-image-transition');
         }
@@ -160,32 +161,49 @@
             logoImg.src = darkLogo;
             sunIcon.style.transform = 'translateY(-100%)';
             moonIcon.style.transform = 'translateY(0)';
-            body.classList.add('image-transition'); // Shows light image for dark mode
+            // In dark mode, the 'image-transition' class is applied to show image-two (light image)
+            body.classList.add('image-transition');
         } else {
             body.classList.remove('dark-mode');
             logoImg.src = lightLogo;
             sunIcon.style.transform = 'translateY(0)';
             moonIcon.style.transform = 'translateY(100%)';
-            body.classList.remove('image-transition'); // Shows dark image for light mode
+            // In light mode, the 'image-transition' class is NOT applied to show image-one (dark image)
+            body.classList.remove('image-transition');
         }
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 
         // Remove quick transition class after a short delay
-        // This delay should be slightly longer than the quick transition duration (0.5s)
         if (isQuickTransition) {
             setTimeout(() => {
                 body.classList.remove('quick-image-transition');
-            }, 550); // 50ms buffer after 0.5s
+            }, 550); // Slightly longer than 0.5s
         }
     }
 
-    // Initial theme check on load (not a quick transition)
-    const savedTheme = localStorage.getItem('theme');
-    applyTheme(savedTheme === 'dark');
+    // --- Initial Load Logic ---
+    // Force page to load in dark mode
+    // We don't check localStorage initially; we just set dark mode
+    applyTheme(true); // Always load in dark mode by default
 
+    // If a theme was previously saved, respect it, but still default to dark if no preference.
+    // However, since you explicitly want to load on dark mode, the above line is sufficient.
+    // If you want to load dark mode AND *also* remember a user's previous preference (if it was light),
+    // you'd add:
+    // const savedTheme = localStorage.getItem('theme');
+    // if (savedTheme === 'light') { // If user previously set light, switch to it
+    //    applyTheme(false);
+    // } else { // Otherwise, ensure dark mode is applied
+    //    applyTheme(true);
+    // }
+
+
+    // --- Theme Toggle Click Event ---
     themeToggle.addEventListener('click', function () {
-        const isDarkMode = !body.classList.contains('dark-mode'); // Determine the *new* state
-        applyTheme(isDarkMode, true); // Call applyTheme with isQuickTransition = true
+        // Determine the *new* theme state
+        const isDarkMode = !body.classList.contains('dark-mode');
+        // Apply the new theme with a quick transition
+        applyTheme(isDarkMode, true);
     });
 
     // --- Loading Screen Hiding Logic ---
@@ -195,13 +213,20 @@
 
     // --- Explore Button & Content Transition Logic ---
     exploreButton.addEventListener('click', function() {
-        if (!body.classList.contains('show-new-content')) { // Prevent re-triggering
+        // Only proceed if the 'new-content-wrapper' isn't already shown
+        if (!body.classList.contains('show-new-content')) {
+            // 1. Hide the initial content (fade out)
             document.body.classList.add('hide-initial-content');
 
+            // 2. Show the new content (fade in)
             setTimeout(() => {
                 document.body.classList.add('show-new-content');
 
-                // Set initial image based on current theme (this part is NOT quick)
+                // Ensure quick-image-transition is NOT active for this 5s transition
+                body.classList.remove('quick-image-transition');
+
+                // Set initial image of the new content based on current theme
+                // This will use the default 5s transition if image changes
                 const isDarkModeActive = body.classList.contains('dark-mode');
                 if (isDarkModeActive) {
                     body.classList.add('image-transition'); // Dark mode: show light image
@@ -210,15 +235,15 @@
                 }
 
                 // Start the 5-second delay for the *opposite* image transition
-                // This transition should remain 5 seconds
+                // This is the specific 5-second transition you want after 'Explore'
                 setTimeout(() => {
                     if (body.classList.contains('image-transition')) {
-                        body.classList.remove('image-transition'); // From light image to dark
+                        body.classList.remove('image-transition'); // If currently light image, go back to dark
                     } else {
-                        body.classList.add('image-transition'); // From dark image to light
+                        body.classList.add('image-transition'); // If currently dark image, go to light
                     }
-                }, 5000); // This is the long 5-second transition
-            }, 50);
+                }, 5000); // This is the long 5-second transition.
+            }, 50); // Small delay to allow initial content to start fading
         }
     });
 });
