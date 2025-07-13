@@ -152,24 +152,23 @@
 
     // --- Helper Function to set Image Visibility based on Theme ---
     // This function ensures the correct background image (dark or light) is showing
-    // for general theme changes, regardless of explore sequence.
+    // for general theme changes (from the toggle), independent of the explore sequence.
     function setImageVisibilityForTheme(isDarkMode, isQuickTransition = false) {
         if (isQuickTransition) {
             body.classList.add('quick-image-transition'); // Apply quick transition for images
         }
 
+        // Hide the hero background image when fullscreen images are active for theme toggle
+        body.classList.add('fade-hero-background');
+
         if (isDarkMode) {
-            // Dark Mode: hero-background-image (dark) should fade out, fullscreen-image-container image-two (light) should be visible
+            // Dark Mode: Show fullscreen-image-container image-two (light image)
             body.classList.add('image-transition'); // Activates image-two
-            body.classList.remove('fade-hero-background'); // Ensure hero background is not fading if it wasn't
-            // After Explore, image-one-to-transparent might be active. Ensure it's removed for normal toggle
-            body.classList.remove('image-one-to-transparent');
+            body.classList.remove('show-explore-image-one'); // Ensure image-one is hidden
         } else {
-            // Light Mode: hero-background-image (dark) should be visible, fullscreen-image-container image-one (dark) should be visible
+            // Light Mode: Show fullscreen-image-container image-one (dark image)
             body.classList.remove('image-transition'); // Deactivates image-two, shows image-one (dark)
-            body.classList.remove('fade-hero-background'); // Ensure hero background is not fading if it wasn't
-            // After Explore, image-one-to-transparent might be active. Ensure it's removed for normal toggle
-            body.classList.remove('image-one-to-transparent');
+            body.classList.add('show-explore-image-one'); // Explicitly show image-one
         }
 
         if (isQuickTransition) {
@@ -182,7 +181,7 @@
 
     // --- Function to apply general theme (UI elements, logo, icons) ---
     // This function manages the 'dark-mode' class, logo, and sun/moon icons.
-    function applyUITheme(isDarkMode, isQuickTransition = false) {
+    function applyUITheme(isDarkMode) { // Removed isQuickTransition as it's not directly used for UI elements here
         if (isDarkMode) {
             body.classList.add('dark-mode');
             logoImg.src = darkLogo;
@@ -201,15 +200,12 @@
     // 1. Force page to load in dark mode for UI elements.
     applyUITheme(true);
 
-    // 2. Set initial state of background images on load for dark mode.
-    // In dark mode on load, hero-background-image should be visible at 25% opacity,
-    // and fullscreen-image-container images (image-one/image-two) should be hidden.
-    // This means 'image-transition' and 'image-one-full-opacity' and 'image-one-to-transparent' should NOT be present.
-    body.classList.remove('image-transition');
-    body.classList.remove('image-one-full-opacity'); // Clean up any lingering states
-    body.classList.remove('image-one-to-transparent'); // Clean up any lingering states
-    body.classList.remove('fade-hero-background'); // Ensure hero background is not fading on load
-
+    // 2. Initial state of background images on load for dark mode.
+    // On page load, hero-background-image is visible at 25% opacity.
+    // fullscreen-image-container images (image-one/image-two) should be hidden.
+    body.classList.remove('image-transition'); // Ensure image-two is not active
+    body.classList.remove('show-explore-image-one'); // Ensure image-one is not active
+    body.classList.remove('fade-hero-background'); // Ensure hero background is visible (at 25%)
 
     // --- Theme Toggle Click Event ---
     themeToggle.addEventListener('click', function () {
@@ -218,14 +214,8 @@
             const isCurrentlyDarkMode = body.classList.contains('dark-mode');
             const newIsDarkMode = !isCurrentlyDarkMode; // Determine the *new* theme state
 
-            applyUITheme(newIsDarkMode, true); // Quick transition for UI elements
-            setImageVisibilityForTheme(newIsDarkMode, true); // Quick transition for images
-
-            // Ensure the hero-background-image is visible at its default 25% if switching to light
-            // or if it was hidden by the explore sequence.
-            if (!newIsDarkMode) { // If switching TO light mode
-                body.classList.remove('fade-hero-background'); // Make sure hero bg is visible
-            }
+            applyUITheme(newIsDarkMode); // Apply UI theme (5s transition from CSS)
+            setImageVisibilityForTheme(newIsDarkMode, true); // Quick image transition
         }
     });
 
@@ -263,23 +253,22 @@
             // Trigger the 5-second UI dark-to-light transition
             applyUITheme(false); // Switch UI to light mode over 5 seconds (CSS transitions handle this)
 
-            // Ensure the new set of full-screen images (image-one, image-two) becomes active
-            // Initially, we want image-one (dark fabricator) to be visible, then transition to image-two (light fabricator).
-            // But since the UI is also going light, it should match: light UI -> dark image (image-one), then transition to light image (image-two).
-            // So, for the start of the 5s image transition, ensure image-one is visible, and then 'image-transition' will flip it.
-            body.classList.remove('image-transition'); // Ensure image-one is the active one from fullscreen-image-container
-            body.classList.add('show-explore-image-one'); // Make image-one fully visible in fullscreen-image-container
+            // At this point (1s after Explore click), the hero background is gone.
+            // We need to show the correct first image for the sequence (dark fabricator, image-one).
+            // Then, 1 second later, transition to image-two.
+            body.classList.remove('image-transition'); // Ensure image-one is showing from fullscreen-image-container
+            body.classList.add('show-explore-image-one'); // Make image-one visible (dark fabricator)
 
-            // Then, after 1 second of it being visible (2 seconds from explore click total), trigger the transition to image-two
+            // Then, 1 second after image-one shows (2 seconds from explore click total), trigger transition to image-two
             setTimeout(() => {
-                body.classList.remove('show-explore-image-one'); // No longer need this to force it visible
+                body.classList.remove('show-explore-image-one'); // Remove this class, as image-transition will now take over
                 body.classList.add('image-transition'); // This makes image-one fade out, image-two fade in (over 5s)
-            }, 1000); // 1 second after this setTimeout (2 seconds from explore click total)
+            }, 1000); // This happens 1s after the current setTimeout (total 2s from Explore click)
 
-            // Remove the 'in-explore-transition' class after the full 5-second UI/image transition
+            // Remove the 'in-explore-transition' class after the full 5-second UI/image transition (5s from previous setTimeout, total 6s from Explore click)
             setTimeout(() => {
                 body.classList.remove('in-explore-transition');
-            }, 5000); // 5 seconds for the UI and image transitions
+            }, 5000); // This is the total duration for the UI and image transitions AFTER the 1s initial delay
         }, 1000); // 1 second after 'Explore' button click (when hero background finishes fading)
     });
 });
