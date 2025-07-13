@@ -232,6 +232,31 @@ body.light-mode .menu a {
     border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
 }
 
+.explore-button-link:hover {
+    /* Optional: Add a hover effect */
+    background-color: darkgreen;
+}
+
+.explore-button-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the button */
+    align-items: center; /* Vertically center the button if needed */
+    margin-top: 0px; /* Add some space above the button */
+}
+
+.explore-button-container button {
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    font-size: 1vw;
+    align-items: center; /* Vertically center the button if needed */
+    margin-top: 20px; /* Add some space above the button */
+    background-color: #00000000;
+    color: #ffffff;
+    padding: 1vw 2vw; /* Adjust padding as needed */
+    text-decoration: none; /* Remove underline from the link */
+    border-radius: 25px; /* Adjust for more or less rounded corners */
+    border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
+}
+
 .dark-mode .nutrition-text {
     color: white;
 }
@@ -310,6 +335,8 @@ a.email-button
 {
     color:  #00cb31; 
 }
+
+
 
 
 @media (max-width: 768px) {
@@ -434,12 +461,20 @@ body.dark-mode {
     
 }
 
+.explore-button-container button {
+    font-size: 4vw;
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */
+
+    
+}    
+
 .contact-container{
     font-size: 4vw
 }
 
 
 }
+
 
 /* Fullscreen Image Container Styling */
 .fullscreen-image-container {
@@ -621,4 +656,145 @@ body.show-new-content .new-content-wrapper {
 body.quick-image-transition .image-one,
 body.quick-image-transition .image-two {
     transition: opacity 0.5s ease-in-out !important; /* Override the default 5s transition */
+}
+
+
+@media screen and (min-width: 650px) and (max-width: 768px) {
+ 
+    .menu {
+        font-size: 2.5vw;
+        margin-top: 20vw;
+        margin-left: -70vw;
+        margin-bottom: -6vw;
+        min-width: 90%;
+    }
+    .menu {
+    /* Existing styles for your menu */
+    display: flex;
+    gap: 20px; /* Example gap between menu items */
+    justify-content: center; /* Example alignment */
+    padding: 10px 0; /* Example vertical padding */
+    position: relative; /* Needed for absolute positioning of pseudo-elements */
+    z-index:10;
+
+}
+
+.menu::before{
+    content: ""; /* Required for pseudo-elements to be generated */
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px; /* Adjust for thicker or thinner lines */
+    margin-top: -2vw;
+    background-color: #eaeaea; /* Set the color of the lines */
+}
+
+.menu::before {
+    top: 0; /* Position the line above the menu */
+}
+
+.menu::after {
+    bottom: 0; /* Position the line below the menu */
+}
+    
+    .logo-img {
+        margin-top: -200vw;
+        height: 7vw;
+        margin-left: 25vw;
+    }
+
+    .nutrition-text {
+        font-size: 5vw;
+        padding-top: 15vw;
+    }
+
+    .info-text {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: -2vw;
+    font-size: 3.5vw;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    text-align: center;
+    }
+
+    .cooking-text,
+    .later-text {
+        font-size: 3vw;
+    }
+
+    .theme-toggle-button__sun img {
+        width: 4vw;
+        height: auto; /* Changed from 20px */
+    }
+
+    .theme-toggle-button__moon img {
+        width: 4vw;
+        height: auto; /* Changed from 20px */
+    }
+
+    .footer-text {
+        font-size: 2vw; /* Adjusted font size */
+        padding: 15px 0;
+    }
+
+    .loading-screen img {
+        width: 40vw; /* Adjusted width */
+    }
+
+    body {
+    font-family: "Eina Regular", Arial, sans-serif;
+    margin: 0;
+    background-color: #fff;
+    color: #000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+}
+
+body.dark-mode {
+    background-color: #868686;
+    color: #fff;
+}
+
+.dark-mode .fdi-button-link{
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */    
+    }
+.dark-mode .fdi-button-container button {
+    font-size: 4vw;
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */
+
+    
+}
+
+ .fdi-button-link{
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */    
+    }
+.fdi-button-container button {
+    font-size: 4vw;
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */
+
+    
+}
+
+.explore-button-container button {
+    font-size: 3vw;
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */
+
+    
+}    
+
+.contact-container{
+    font-size: 4vw
+}
+
+.top-banner {
+
+font-size: 3vw;
+padding-bottom: 6%;
+}
 }
