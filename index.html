@@ -132,7 +132,7 @@
             </style>
     
     <script>
-       document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const logoImg = document.getElementById('logo-img');
@@ -147,66 +147,78 @@
     const newContentWrapper = document.getElementById('new-content-wrapper');
 
     // --- Theme Toggling Logic ---
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        logoImg.src = darkLogo;
-        sunIcon.style.transform = 'translateY(-100%)';
-        moonIcon.style.transform = 'translateY(0)';
-    } else {
-        logoImg.src = lightLogo;
-        sunIcon.style.transform = 'translateY(0)';
-        moonIcon.style.transform = 'translateY(100%)';
-    }
 
-    themeToggle.addEventListener('click', function () {
-        body.classList.toggle('dark-mode');
-        const isDarkMode = body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-
+    // Function to apply theme and update image state
+    function applyTheme(isDarkMode) {
         if (isDarkMode) {
+            body.classList.add('dark-mode');
             logoImg.src = darkLogo;
             sunIcon.style.transform = 'translateY(-100%)';
             moonIcon.style.transform = 'translateY(0)';
+            // When in dark mode, ensure the second image (light one) is visible
+            // This means image-transition class should be present on body
+            body.classList.add('image-transition');
         } else {
+            body.classList.remove('dark-mode');
             logoImg.src = lightLogo;
             sunIcon.style.transform = 'translateY(0)';
             moonIcon.style.transform = 'translateY(100%)';
+            // When in light mode, ensure the first image (dark one) is visible
+            // This means image-transition class should NOT be present on body
+            body.classList.remove('image-transition');
         }
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    }
+
+    // Initial theme check on load
+    const savedTheme = localStorage.getItem('theme');
+    applyTheme(savedTheme === 'dark'); // Call the function to set initial state
+
+
+    themeToggle.addEventListener('click', function () {
+        const isDarkMode = !body.classList.contains('dark-mode'); // Determine the *new* state
+        applyTheme(isDarkMode); // Apply the new theme
     });
 
     // --- Loading Screen Hiding Logic ---
-    // Simulate loading (replace with actual loading logic if needed)
     setTimeout(() => {
         loadingScreen.classList.remove('loaded');
-        // You might want to hide the loading screen completely after it fades out,
-        // e.g., by adding display: none; after a delay equal to its fade transition.
-    }, 1000); // Assumes your loading screen has a 1-second fade out if 'loaded' class removes it.
-
+    }, 1000);
 
     // --- Explore Button & Content Transition Logic ---
     exploreButton.addEventListener('click', function() {
-        // 1. Hide the initial content (fade out)
-        // Add the class to the body, which then targets initial-content-wrapper
-        document.body.classList.add('hide-initial-content');
+        // Only proceed if the 'new-content-wrapper' isn't already shown
+        // This prevents re-triggering the transition if the button is clicked multiple times
+        if (!body.classList.contains('show-new-content')) {
+            // 1. Hide the initial content (fade out)
+            document.body.classList.add('hide-initial-content');
 
-        // 2. Show the new content (fade in)
-        // Add a slight delay before showing the new content to allow the initial content to start fading
-        setTimeout(() => {
-            document.body.classList.add('show-new-content');
-        }, 50); // Small delay, adjust as needed, should be less than the initial content's fade-out time.
+            // 2. Show the new content (fade in)
+            setTimeout(() => {
+                document.body.classList.add('show-new-content');
+            }, 50);
 
-        // 3. Start the 5-second delay for the image transition (within the new content)
-        setTimeout(() => {
-            document.body.classList.add('image-transition');
-        }, 5000); // 5 seconds after the 'Explore' button is pressed.
+            // 3. IMPORTANT: Reset the image state immediately to match the current theme
+            // This ensures that when the new content becomes visible, the correct initial image is shown
+            const isDarkModeActive = body.classList.contains('dark-mode');
+            if (isDarkModeActive) {
+                // If in dark mode, the transition should be applied to show the light image
+                document.body.classList.add('image-transition');
+            } else {
+                // If in light mode, the transition should NOT be applied to show the dark image
+                document.body.classList.remove('image-transition');
+            }
 
-        // Optionally, if you want to completely remove the initial content from the DOM
-        // after it fades out, you could add another setTimeout here.
-        // For example, if initial-content-wrapper fades out over 1s:
-        // setTimeout(() => {
-        //     initialContentWrapper.style.display = 'none';
-        // }, 1050); // 1 second for fade out + 50ms buffer
+            // 4. Start the 5-second delay for the *opposite* image transition
+            // This will flip the image after 5 seconds, regardless of initial state
+            setTimeout(() => {
+                if (body.classList.contains('image-transition')) {
+                    body.classList.remove('image-transition'); // If it's light image, go back to dark
+                } else {
+                    body.classList.add('image-transition'); // If it's dark image, go to light
+                }
+            }, 5000);
+        }
     });
 });
     </script>
