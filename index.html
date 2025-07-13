@@ -132,57 +132,83 @@
             </style>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const themeToggle = document.getElementById('theme-toggle');
-            const body = document.body;
-            const logoImg = document.getElementById('logo-img');
-            const lightLogo = '/logos/ReformEatBlack.png';
-            const darkLogo = '/logos/ReformEatWhite.png';
-            const loadingScreen = document.querySelector('.loading-screen');
-            const sunIcon = document.querySelector('.theme-toggle-button__sun img'); // Corrected selector
-            const moonIcon = document.querySelector('.theme-toggle-button__moon img'); // Corrected selector
+       document.addEventListener('DOMContentLoaded', function () {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const logoImg = document.getElementById('logo-img');
+    const lightLogo = '/logos/ReformEatBlack.png';
+    const darkLogo = '/logos/ReformEatWhite.png';
+    const loadingScreen = document.querySelector('.loading-screen');
+    const sunIcon = document.querySelector('.theme-toggle-button__sun img');
+    const moonIcon = document.querySelector('.theme-toggle-button__moon img');
 
-            // Check for saved theme preference and set initial logo
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                logoImg.src = darkLogo;
-                sunIcon.style.transform = 'translateY(-100%)';
-                moonIcon.style.transform = 'translateY(0)';
-            } else {
-                logoImg.src = lightLogo;
-                sunIcon.style.transform = 'translateY(0)';
-                moonIcon.style.transform = 'translateY(100%)';
-            }
+    const exploreButton = document.getElementById('explore-button');
+    const initialContentWrapper = document.getElementById('initial-content-wrapper');
+    const newContentWrapper = document.getElementById('new-content-wrapper');
 
-            themeToggle.addEventListener('click', function () {
-                body.classList.toggle('dark-mode');
-                const isDarkMode = body.classList.contains('dark-mode');
-                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    // --- Theme Toggling Logic ---
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        logoImg.src = darkLogo;
+        sunIcon.style.transform = 'translateY(-100%)';
+        moonIcon.style.transform = 'translateY(0)';
+    } else {
+        logoImg.src = lightLogo;
+        sunIcon.style.transform = 'translateY(0)';
+        moonIcon.style.transform = 'translateY(100%)';
+    }
 
-                // Update logo source based on the theme
-                if (isDarkMode) {
-                    logoImg.src = darkLogo;
-                    sunIcon.style.transform = 'translateY(-100%)';
-                    moonIcon.style.transform = 'translateY(0)';
-                } else {
-                    logoImg.src = lightLogo;
-                    sunIcon.style.transform = 'translateY(0)';
-                    moonIcon.style.transform = 'translateY(100%)';
-                }
-            });
+    themeToggle.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 
-            // Simulate loading (replace with actual loading logic if needed)
-            setTimeout(() => {
-                loadingScreen.classList.remove('loaded');
-            }, 1000);
-        });
+        if (isDarkMode) {
+            logoImg.src = darkLogo;
+            sunIcon.style.transform = 'translateY(-100%)';
+            moonIcon.style.transform = 'translateY(0)';
+        } else {
+            logoImg.src = lightLogo;
+            sunIcon.style.transform = 'translateY(0)';
+            moonIcon.style.transform = 'translateY(100%)';
+        }
+    });
 
-              // Image transition after 5 seconds
+    // --- Loading Screen Hiding Logic ---
+    // Simulate loading (replace with actual loading logic if needed)
+    setTimeout(() => {
+        loadingScreen.classList.remove('loaded');
+        // You might want to hide the loading screen completely after it fades out,
+        // e.g., by adding display: none; after a delay equal to its fade transition.
+    }, 1000); // Assumes your loading screen has a 1-second fade out if 'loaded' class removes it.
+
+
+    // --- Explore Button & Content Transition Logic ---
+    exploreButton.addEventListener('click', function() {
+        // 1. Hide the initial content (fade out)
+        // Add the class to the body, which then targets initial-content-wrapper
+        document.body.classList.add('hide-initial-content');
+
+        // 2. Show the new content (fade in)
+        // Add a slight delay before showing the new content to allow the initial content to start fading
+        setTimeout(() => {
+            document.body.classList.add('show-new-content');
+        }, 50); // Small delay, adjust as needed, should be less than the initial content's fade-out time.
+
+        // 3. Start the 5-second delay for the image transition (within the new content)
         setTimeout(() => {
             document.body.classList.add('image-transition');
-        }, 5000);
-      
+        }, 5000); // 5 seconds after the 'Explore' button is pressed.
+
+        // Optionally, if you want to completely remove the initial content from the DOM
+        // after it fades out, you could add another setTimeout here.
+        // For example, if initial-content-wrapper fades out over 1s:
+        // setTimeout(() => {
+        //     initialContentWrapper.style.display = 'none';
+        // }, 1050); // 1 second for fade out + 50ms buffer
+    });
+});
     </script>
     <script src="main.js"></script>
 </body>
