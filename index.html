@@ -132,7 +132,7 @@
             </style>
     
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+   document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const logoImg = document.getElementById('logo-img');
@@ -140,7 +140,7 @@
     const darkLogo = '/logos/ReformEatWhite.png';
     const loadingScreen = document.querySelector('.loading-screen');
     const sunIcon = document.querySelector('.theme-toggle-button__sun img');
-    const moonIcon = document = document.querySelector('.theme-toggle-button__moon img');
+    const moonIcon = document.querySelector('.theme-toggle-button__moon img'); // Corrected typo here
 
     const exploreButton = document.getElementById('explore-button');
     const initialContentWrapper = document.getElementById('initial-content-wrapper');
@@ -148,17 +148,12 @@
 
     // --- Theme Toggling Logic ---
 
-    // Function to apply theme and update image state
-    // isQuickTransition: true for theme toggle clicks (0.5s), false for initial load (no explicit image transition needed yet)
-    // isExploreTrigger: true if called from explore, which means we reset the image-one opacity to 25% first
-    function applyTheme(isDarkMode, isQuickTransition = false, isExploreTrigger = false) {
-        // If it's an explore trigger, make sure image-one starts at 25% for a fresh fade-in
-        if (isExploreTrigger) {
-             body.classList.remove('image-one-full-opacity'); // Ensure it's not already full
-             // We don't remove image-transition here, as it will be managed separately by the explore button logic
-        }
-
-        // Apply quick transition class if explicitly requested (from theme toggle)
+    // Function to apply theme and update logo/icons state
+    // It DOES NOT manage the image-transition for general theme changes anymore,
+    // as explore button click has a very specific image sequence.
+    // isQuickTransition: true for theme toggle clicks (0.5s), false for initial load
+    function applyTheme(isDarkMode, isQuickTransition = false) {
+        // Temporarily add quick-image-transition if this is a theme toggle click
         if (isQuickTransition) {
             body.classList.add('quick-image-transition');
         }
@@ -168,24 +163,15 @@
             logoImg.src = darkLogo;
             sunIcon.style.transform = 'translateY(-100%)';
             moonIcon.style.transform = 'translateY(0)';
-            // In dark mode, the 'image-transition' class is generally applied to show image-two (light image)
-            // But this specific logic for explore button overrides it
-            if (!isExploreTrigger) { // Don't touch image-transition if explore is managing it
-               body.classList.add('image-transition'); // Shows light image for general theme switch
-            }
         } else {
             body.classList.remove('dark-mode');
             logoImg.src = lightLogo;
             sunIcon.style.transform = 'translateY(0)';
             moonIcon.style.transform = 'translateY(100%)';
-            // In light mode, the 'image-transition' class is generally NOT applied to show image-one (dark image)
-            if (!isExploreTrigger) { // Don't touch image-transition if explore is managing it
-               body.classList.remove('image-transition'); // Shows dark image for general theme switch
-            }
         }
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 
-        // Remove quick transition class after a short delay
+        // Remove quick transition class after its duration
         if (isQuickTransition) {
             setTimeout(() => {
                 body.classList.remove('quick-image-transition');
@@ -194,16 +180,32 @@
     }
 
     // --- Initial Load Logic ---
-    // Force page to load in dark mode
-    // The image-one will automatically start at 25% opacity due to its CSS
+    // 1. Force page to load in dark mode.
+    // 2. Image-one will automatically start at 25% opacity due to CSS.
     applyTheme(true); // Always load in dark mode by default
+
+    // Set initial state of images on load based on theme (Dark mode on load -> show image 2 if images were visible)
+    // IMPORTANT: On page load, image-one should be visible at 25%. So ensure 'image-transition' and 'image-one-full-opacity' are NOT present.
+    body.classList.remove('image-transition');
+    body.classList.remove('image-one-full-opacity');
+
 
     // --- Theme Toggle Click Event ---
     themeToggle.addEventListener('click', function () {
-        // Determine the *new* theme state
-        const isDarkMode = !body.classList.contains('dark-mode');
-        // Apply the new theme with a quick transition, not from explore
-        applyTheme(isDarkMode, true, false);
+        // Only allow theme toggle if the explore sequence is NOT active
+        // This prevents interference with the long 5s explore transition
+        if (!body.classList.contains('in-explore-transition')) {
+            const isDarkMode = !body.classList.contains('dark-mode');
+            applyTheme(isDarkMode, true); // Quick transition for theme changes
+            // For theme changes, the active image should also change quickly
+            if (isDarkMode) {
+                // If switching to dark mode, show image 2 (light image) quickly
+                body.classList.add('image-transition');
+            } else {
+                // If switching to light mode, show image 1 (dark image) quickly
+                body.classList.remove('image-transition');
+            }
+        }
     });
 
     // --- Loading Screen Hiding Logic ---
@@ -213,48 +215,47 @@
 
     // --- Explore Button & Content Transition Logic ---
     exploreButton.addEventListener('click', function() {
-        // Only proceed if the 'new-content-wrapper' isn't already shown
-        if (!body.classList.contains('show-new-content')) {
-            // 1. Hide the initial content (fade out)
-            document.body.classList.add('hide-initial-content');
-
-            // 2. Show the new content wrapper (fade in)
-            setTimeout(() => {
-                document.body.classList.add('show-new-content');
-
-                // Ensure quick-image-transition is NOT active for this sequence
-                body.classList.remove('quick-image-transition');
-
-                // --- NEW IMAGE TRANSITION SEQUENCE ---
-
-                // Step 1: Ensure image-one is showing and set to 25% opacity initially
-                // We're about to make it 100%, so remove image-transition first if it's there
-                body.classList.remove('image-transition');
-                // Force image-one to its 25% start by removing the full opacity class
-                body.classList.remove('image-one-full-opacity');
-
-                // Set the correct image (dark/light fabricator) based on the current theme
-                // This determines which image becomes image-one for the 1s fade to 100%
-                const isDarkModeActive = body.classList.contains('dark-mode');
-                // The 'applyTheme' call here will ensure image-one is correctly loaded based on theme
-                // It will *not* trigger the quick image transition on the images themselves
-                // as isQuickTransition is false and isExploreTrigger is true (which prevents image-transition from being added/removed)
-                applyTheme(isDarkModeActive, false, true);
-
-                // Step 2: Image 1 transitions to 100% opacity in 1 second
-                setTimeout(() => {
-                    body.classList.add('image-one-full-opacity');
-                }, 50); // Small delay to ensure class removal is processed first
-
-                // Step 3: After 1 second (from image-one starting its fade to 100%),
-                // image 1 transitions out and image 2 transitions in over 4 seconds.
-                // This means the total time from explore click to image 2 fully visible is 1s + 4s = 5s.
-                setTimeout(() => {
-                    body.classList.add('image-transition'); // Triggers image-one fade out, image-two fade in
-                }, 1000); // This delay is for the start of the 4-second transition (1s after Explore click)
-
-            }, 50); // Small delay for initial content fade-out
+        // Prevent multiple clicks during the transition
+        if (body.classList.contains('in-explore-transition') || body.classList.contains('show-new-content')) {
+            return;
         }
+        body.classList.add('in-explore-transition'); // Mark that an explore transition is active
+
+        // 1. Hide the initial content (fade out) over 1 second
+        document.body.classList.add('hide-initial-content');
+
+        // Ensure quick-image-transition is NOT active for this sequence
+        body.classList.remove('quick-image-transition');
+
+        // CRITICAL: Force image-one to start at 25% immediately before its fade to transparent
+        body.classList.remove('image-one-full-opacity'); // Removes the 100% opacity state
+        body.classList.remove('image-transition'); // Ensures image-one is visible (at 25%)
+
+        // Step A: Image one goes to full transparency (0%) over 1 second
+        // Set a temp class that makes image-one transparent (via CSS transition)
+        body.classList.add('image-one-to-transparent'); // This new class handles the 0.25 to 0 opacity
+        
+        // 2. Show the new content wrapper (fade in) over 1 second
+        setTimeout(() => {
+            document.body.classList.add('show-new-content');
+        }, 50); // Small delay for initial content fade-out start
+
+        // Step B: After 1 second (from explore click), UI fades dark to light & image-one (now transparent) fades into image-two over 5 seconds.
+        setTimeout(() => {
+            // Remove the image-one-to-transparent class as image-one will now be controlled by image-transition
+            body.classList.remove('image-one-to-transparent');
+
+            // Trigger the 5-second UI dark-to-light transition
+            applyTheme(false); // Switch to light mode over 5 seconds (CSS transitions handle this)
+
+            // Trigger the 5-second image-one-to-image-two transition
+            body.classList.add('image-transition'); // This makes image-one fade out (from 0%) and image-two fade in
+
+            // Remove the 'in-explore-transition' class after the full 5-second UI/image transition
+            setTimeout(() => {
+                body.classList.remove('in-explore-transition');
+            }, 5000); // 5 seconds for the UI and image transitions
+        }, 1000); // 1 second after 'Explore' button click
     });
 });
     </script>
