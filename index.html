@@ -140,7 +140,7 @@
     const darkLogo = '/logos/ReformEatWhite.png';
     const loadingScreen = document.querySelector('.loading-screen');
     const sunIcon = document.querySelector('.theme-toggle-button__sun img');
-    const moonIcon = document.querySelector('.theme-toggle-button__moon img');
+    const moonIcon = document = document.querySelector('.theme-toggle-button__moon img');
 
     const exploreButton = document.getElementById('explore-button');
     const initialContentWrapper = document.getElementById('initial-content-wrapper');
@@ -150,7 +150,14 @@
 
     // Function to apply theme and update image state
     // isQuickTransition: true for theme toggle clicks (0.5s), false for initial load (no explicit image transition needed yet)
-    function applyTheme(isDarkMode, isQuickTransition = false) {
+    // isExploreTrigger: true if called from explore, which means we reset the image-one opacity to 25% first
+    function applyTheme(isDarkMode, isQuickTransition = false, isExploreTrigger = false) {
+        // If it's an explore trigger, make sure image-one starts at 25% for a fresh fade-in
+        if (isExploreTrigger) {
+             body.classList.remove('image-one-full-opacity'); // Ensure it's not already full
+             // We don't remove image-transition here, as it will be managed separately by the explore button logic
+        }
+
         // Apply quick transition class if explicitly requested (from theme toggle)
         if (isQuickTransition) {
             body.classList.add('quick-image-transition');
@@ -161,15 +168,20 @@
             logoImg.src = darkLogo;
             sunIcon.style.transform = 'translateY(-100%)';
             moonIcon.style.transform = 'translateY(0)';
-            // In dark mode, the 'image-transition' class is applied to show image-two (light image)
-            body.classList.add('image-transition');
+            // In dark mode, the 'image-transition' class is generally applied to show image-two (light image)
+            // But this specific logic for explore button overrides it
+            if (!isExploreTrigger) { // Don't touch image-transition if explore is managing it
+               body.classList.add('image-transition'); // Shows light image for general theme switch
+            }
         } else {
             body.classList.remove('dark-mode');
             logoImg.src = lightLogo;
             sunIcon.style.transform = 'translateY(0)';
             moonIcon.style.transform = 'translateY(100%)';
-            // In light mode, the 'image-transition' class is NOT applied to show image-one (dark image)
-            body.classList.remove('image-transition');
+            // In light mode, the 'image-transition' class is generally NOT applied to show image-one (dark image)
+            if (!isExploreTrigger) { // Don't touch image-transition if explore is managing it
+               body.classList.remove('image-transition'); // Shows dark image for general theme switch
+            }
         }
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 
@@ -183,27 +195,15 @@
 
     // --- Initial Load Logic ---
     // Force page to load in dark mode
-    // We don't check localStorage initially; we just set dark mode
+    // The image-one will automatically start at 25% opacity due to its CSS
     applyTheme(true); // Always load in dark mode by default
-
-    // If a theme was previously saved, respect it, but still default to dark if no preference.
-    // However, since you explicitly want to load on dark mode, the above line is sufficient.
-    // If you want to load dark mode AND *also* remember a user's previous preference (if it was light),
-    // you'd add:
-    // const savedTheme = localStorage.getItem('theme');
-    // if (savedTheme === 'light') { // If user previously set light, switch to it
-    //    applyTheme(false);
-    // } else { // Otherwise, ensure dark mode is applied
-    //    applyTheme(true);
-    // }
-
 
     // --- Theme Toggle Click Event ---
     themeToggle.addEventListener('click', function () {
         // Determine the *new* theme state
         const isDarkMode = !body.classList.contains('dark-mode');
-        // Apply the new theme with a quick transition
-        applyTheme(isDarkMode, true);
+        // Apply the new theme with a quick transition, not from explore
+        applyTheme(isDarkMode, true, false);
     });
 
     // --- Loading Screen Hiding Logic ---
@@ -218,32 +218,42 @@
             // 1. Hide the initial content (fade out)
             document.body.classList.add('hide-initial-content');
 
-            // 2. Show the new content (fade in)
+            // 2. Show the new content wrapper (fade in)
             setTimeout(() => {
                 document.body.classList.add('show-new-content');
 
-                // Ensure quick-image-transition is NOT active for this 5s transition
+                // Ensure quick-image-transition is NOT active for this sequence
                 body.classList.remove('quick-image-transition');
 
-                // Set initial image of the new content based on current theme
-                // This will use the default 5s transition if image changes
-                const isDarkModeActive = body.classList.contains('dark-mode');
-                if (isDarkModeActive) {
-                    body.classList.add('image-transition'); // Dark mode: show light image
-                } else {
-                    body.classList.remove('image-transition'); // Light mode: show dark image
-                }
+                // --- NEW IMAGE TRANSITION SEQUENCE ---
 
-                // Start the 5-second delay for the *opposite* image transition
-                // This is the specific 5-second transition you want after 'Explore'
+                // Step 1: Ensure image-one is showing and set to 25% opacity initially
+                // We're about to make it 100%, so remove image-transition first if it's there
+                body.classList.remove('image-transition');
+                // Force image-one to its 25% start by removing the full opacity class
+                body.classList.remove('image-one-full-opacity');
+
+                // Set the correct image (dark/light fabricator) based on the current theme
+                // This determines which image becomes image-one for the 1s fade to 100%
+                const isDarkModeActive = body.classList.contains('dark-mode');
+                // The 'applyTheme' call here will ensure image-one is correctly loaded based on theme
+                // It will *not* trigger the quick image transition on the images themselves
+                // as isQuickTransition is false and isExploreTrigger is true (which prevents image-transition from being added/removed)
+                applyTheme(isDarkModeActive, false, true);
+
+                // Step 2: Image 1 transitions to 100% opacity in 1 second
                 setTimeout(() => {
-                    if (body.classList.contains('image-transition')) {
-                        body.classList.remove('image-transition'); // If currently light image, go back to dark
-                    } else {
-                        body.classList.add('image-transition'); // If currently dark image, go to light
-                    }
-                }, 5000); // This is the long 5-second transition.
-            }, 50); // Small delay to allow initial content to start fading
+                    body.classList.add('image-one-full-opacity');
+                }, 50); // Small delay to ensure class removal is processed first
+
+                // Step 3: After 1 second (from image-one starting its fade to 100%),
+                // image 1 transitions out and image 2 transitions in over 4 seconds.
+                // This means the total time from explore click to image 2 fully visible is 1s + 4s = 5s.
+                setTimeout(() => {
+                    body.classList.add('image-transition'); // Triggers image-one fade out, image-two fade in
+                }, 1000); // This delay is for the start of the 4-second transition (1s after Explore click)
+
+            }, 50); // Small delay for initial content fade-out
         }
     });
 });
