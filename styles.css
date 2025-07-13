@@ -497,27 +497,34 @@ body.dark-mode {
     display: block; /* Removes extra space below the image */
 }
 
-/* Specific styling for the first image */
 .image-one {
-    background-color: rgba(51, 51, 51, 0.8); /* 80% opaque black (RGB 51) */
-    opacity: 1; /* Start fully visible */
-    transition: opacity 5s ease-in-out; /* 5-second transition */
+    background-color: rgba(51, 51, 51, 0.8); /* Still the background overlay color */
+    opacity: 0.25; /* Start at 25% opacity */
+    /* Set a transition for its own opacity change and later for fading out */
+    transition: opacity 1s ease-in-out; /* Default for its own fade-in to 100% */
 }
 
-/* Specific styling for the second image */
+/* --- MODIFIED: Image two now transitions over 4 seconds --- */
 .image-two {
-    background-color: rgba(229, 229, 229, 0.10196); /* 10.196% opaque white (RGB 229) */
-    opacity: 0; /* Start fully transparent */
-    transition: opacity 5s ease-in-out; /* 5-second transition */
+    background-color: rgba(229, 229, 229, 0.10196);
+    opacity: 0; /* Still starts hidden */
+    transition: opacity 4s ease-in-out; /* Changed to 4-second transition */
 }
 
-/* Class to trigger the transition */
+/* Class applied to body to trigger image 1 to 100% */
+body.image-one-full-opacity .image-one {
+    opacity: 1; /* Image 1 goes to 100% opacity */
+    transition: opacity 1s ease-in-out; /* Ensure this transition takes 1 second */
+}
+
+/* Original image-transition class (modified slightly for coordination) */
+/* This class will now trigger image-one to fade out and image-two to fade in */
 body.image-transition .image-one {
-    opacity: 0; /* Fade out the first image */
+    opacity: 0; /* Image 1 fades out */
 }
 
 body.image-transition .image-two {
-    opacity: 1; /* Fade in the second image */
+    opacity: 1; /* Image 2 fades in */
 }
 
 /* Existing image transition CSS (keep this as-is) */
