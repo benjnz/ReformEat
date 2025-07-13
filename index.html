@@ -132,7 +132,7 @@
             </style>
     
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
+     document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const logoImg = document.getElementById('logo-img');
@@ -149,35 +149,43 @@
     // --- Theme Toggling Logic ---
 
     // Function to apply theme and update image state
-    function applyTheme(isDarkMode) {
+    function applyTheme(isDarkMode, isQuickTransition = false) { // Added isQuickTransition parameter
+        // Add quick transition class if needed
+        if (isQuickTransition) {
+            body.classList.add('quick-image-transition');
+        }
+
         if (isDarkMode) {
             body.classList.add('dark-mode');
             logoImg.src = darkLogo;
             sunIcon.style.transform = 'translateY(-100%)';
             moonIcon.style.transform = 'translateY(0)';
-            // When in dark mode, ensure the second image (light one) is visible
-            // This means image-transition class should be present on body
-            body.classList.add('image-transition');
+            body.classList.add('image-transition'); // Shows light image for dark mode
         } else {
             body.classList.remove('dark-mode');
             logoImg.src = lightLogo;
             sunIcon.style.transform = 'translateY(0)';
             moonIcon.style.transform = 'translateY(100%)';
-            // When in light mode, ensure the first image (dark one) is visible
-            // This means image-transition class should NOT be present on body
-            body.classList.remove('image-transition');
+            body.classList.remove('image-transition'); // Shows dark image for light mode
         }
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+
+        // Remove quick transition class after a short delay
+        // This delay should be slightly longer than the quick transition duration (0.5s)
+        if (isQuickTransition) {
+            setTimeout(() => {
+                body.classList.remove('quick-image-transition');
+            }, 550); // 50ms buffer after 0.5s
+        }
     }
 
-    // Initial theme check on load
+    // Initial theme check on load (not a quick transition)
     const savedTheme = localStorage.getItem('theme');
-    applyTheme(savedTheme === 'dark'); // Call the function to set initial state
-
+    applyTheme(savedTheme === 'dark');
 
     themeToggle.addEventListener('click', function () {
         const isDarkMode = !body.classList.contains('dark-mode'); // Determine the *new* state
-        applyTheme(isDarkMode); // Apply the new theme
+        applyTheme(isDarkMode, true); // Call applyTheme with isQuickTransition = true
     });
 
     // --- Loading Screen Hiding Logic ---
@@ -187,37 +195,30 @@
 
     // --- Explore Button & Content Transition Logic ---
     exploreButton.addEventListener('click', function() {
-        // Only proceed if the 'new-content-wrapper' isn't already shown
-        // This prevents re-triggering the transition if the button is clicked multiple times
-        if (!body.classList.contains('show-new-content')) {
-            // 1. Hide the initial content (fade out)
+        if (!body.classList.contains('show-new-content')) { // Prevent re-triggering
             document.body.classList.add('hide-initial-content');
 
-            // 2. Show the new content (fade in)
             setTimeout(() => {
                 document.body.classList.add('show-new-content');
-            }, 50);
 
-            // 3. IMPORTANT: Reset the image state immediately to match the current theme
-            // This ensures that when the new content becomes visible, the correct initial image is shown
-            const isDarkModeActive = body.classList.contains('dark-mode');
-            if (isDarkModeActive) {
-                // If in dark mode, the transition should be applied to show the light image
-                document.body.classList.add('image-transition');
-            } else {
-                // If in light mode, the transition should NOT be applied to show the dark image
-                document.body.classList.remove('image-transition');
-            }
-
-            // 4. Start the 5-second delay for the *opposite* image transition
-            // This will flip the image after 5 seconds, regardless of initial state
-            setTimeout(() => {
-                if (body.classList.contains('image-transition')) {
-                    body.classList.remove('image-transition'); // If it's light image, go back to dark
+                // Set initial image based on current theme (this part is NOT quick)
+                const isDarkModeActive = body.classList.contains('dark-mode');
+                if (isDarkModeActive) {
+                    body.classList.add('image-transition'); // Dark mode: show light image
                 } else {
-                    body.classList.add('image-transition'); // If it's dark image, go to light
+                    body.classList.remove('image-transition'); // Light mode: show dark image
                 }
-            }, 5000);
+
+                // Start the 5-second delay for the *opposite* image transition
+                // This transition should remain 5 seconds
+                setTimeout(() => {
+                    if (body.classList.contains('image-transition')) {
+                        body.classList.remove('image-transition'); // From light image to dark
+                    } else {
+                        body.classList.add('image-transition'); // From dark image to light
+                    }
+                }, 5000); // This is the long 5-second transition
+            }, 50);
         }
     });
 });
