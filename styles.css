@@ -28,11 +28,10 @@ body {
         }
         
 body.dark-mode {
-    background-color: #868686;
+    background-color: #000000cc;
     color: #fff;
 }
 .top-banner {
-    background-color: #f0f0f000;
     padding: 2vw 0px;
     display: flex;
     justify-content: space-between;
@@ -44,7 +43,6 @@ body.dark-mode {
 }
 
 body.light-mode .top-banner {
-    background-color: ##000000cc; /* Dark background for dark mode */
     color: #f0f0f0; /* Light text for dark mode */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Optional: darker shadow for dark mode */
 }
@@ -53,13 +51,24 @@ body.light-mode .top-banner {
     background-color: #000000cc;
 }
 
+
+body.light-mode .menu a {
+    color: #000000; /* Or adjust to a suitable light color */
+}
+
+body.light-mode .explore-button-container button {
+    color: #000000; /* This sets the text to WHITE for dark mode */
+}
+
+body.dark-mode .explore-button-container button {
+    color: #ffffff; /* This sets the text to WHITE for dark mode */
+}
+
 body.dark-mode .menu a {
     color: #ffffff; /* Or adjust to a suitable light color */
 }
 
-body.light-mode .menu a {
-    color: #ffffff; /* Or adjust to a suitable light color */
-}
+
 .logo-link {
     display: inline-block;
 }
@@ -437,7 +446,7 @@ a.email-button
 }
 
 body.dark-mode {
-    background-color: #868686;
+    background-color: #000000cc;
     color: #fff;
 }
 
@@ -764,7 +773,7 @@ body.quick-image-transition .image-two {
 }
 
 body.dark-mode {
-    background-color: #868686;
+    background-color: #000000cc;
     color: #fff;
 }
 
