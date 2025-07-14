@@ -236,30 +236,14 @@
             // Determine the current UI theme to decide which image to show first
             const isCurrentUIinDarkMode = body.classList.contains('dark-mode');
 
-            // Set the correct first image for the 5s transition based on CURRENT UI theme
-            if (isCurrentUIinDarkMode) {
-                // If UI is dark, image-two (light fabricator) should be the one to start from.
-                // It will transition to image-one (dark fabricator) for 5s.
-                body.classList.add('image-transition'); // Make image-two visible (it's the 'default' for dark UI)
-                body.classList.remove('show-explore-image-one'); // Ensure image-one is hidden
-            } else {
-                // If UI is light, image-one (dark fabricator) should be the one to start from.
-                // It will transition to image-two (light fabricator) for 5s.
-                body.classList.remove('image-transition'); // Ensure image-one is visible
-                body.classList.add('show-explore-image-one'); // Explicitly show image-one
-            }
+            body.classList.remove('image-transition'); // Ensure image-one is visible
+            body.classList.add('show-explore-image-one'); // Explicitly show image-one
+            
 
             // Then, 1 second after this initial image is shown, trigger the flip to the other image.
             setTimeout(() => {
-                // This section triggers the 5-second image transition (flip)
-                if (isCurrentUIinDarkMode) {
-                    // If started with image-two (light), flip to image-one (dark)
-                    body.classList.remove('image-transition'); // Make image-one visible
-                    body.classList.add('show-explore-image-one');
-                } else {
-                    // If started with image-one (dark), flip to image-two (light)
-                    body.classList.remove('show-explore-image-one'); // Make image-one hidden
-                    body.classList.add('image-transition'); // Make image-two visible
+            body.classList.remove('show-explore-image-one'); // Make image-one hidden
+            body.classList.add('image-transition'); // Make image-two visible
                 }
             }, 1000); // This happens 1s after the previous setTimeout (total 2s from Explore click)
 
