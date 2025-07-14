@@ -136,7 +136,7 @@
             </style>
     
     <script>
-   document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const logoImg = document.getElementById('logo-img');
@@ -156,7 +156,7 @@
             body.classList.add('quick-image-transition'); // Apply quick transition for images
         }
 
-        // Hide the hero background image when fullscreen images are active for theme toggle
+        // Hide the hero background image when fullscreen images are active (via theme toggle)
         body.classList.add('fade-hero-background');
 
         if (isDarkMode) {
@@ -201,11 +201,11 @@
 
     // --- Theme Toggle Click Event ---
     themeToggle.addEventListener('click', function () {
-        if (!body.classList.contains('in-explore-transition')) {
+        if (!body.classList.contains('in-explore-transition')) { // Only allow if not in Explore sequence
             const isCurrentlyDarkMode = body.classList.contains('dark-mode');
             const newIsDarkMode = !isCurrentlyDarkMode;
 
-            applyUITheme(newIsDarkMode); // Apply UI theme (CSS transitions handle timing)
+            applyUITheme(newIsDarkMode); // Apply UI theme (0.5s transition from CSS)
             setImageVisibilityForTheme(newIsDarkMode, true); // Quick image transition (0.5s)
         }
     });
@@ -217,9 +217,8 @@
 
     // --- Explore Button & Content Transition Logic ---
     exploreButton.addEventListener('click', function() {
-        // Prevent multiple clicks during the transition
         if (body.classList.contains('in-explore-transition') || body.classList.contains('show-new-content')) {
-            return;
+            return; // Prevent multiple clicks or re-triggering
         }
         body.classList.add('in-explore-transition'); // Mark transition active
 
@@ -230,18 +229,18 @@
         // Ensure quick-image-transition is NOT active for this sequence
         body.classList.remove('quick-image-transition');
 
-        // 2. After initial content disappears (1 second), start image transitions
+        // 2. After initial content disappears (1 second), show new content and trigger image transitions
         setTimeout(() => {
             document.body.classList.add('show-new-content'); // Show new content wrapper
 
-            // Determine the current UI theme
+            // Determine the current UI theme to decide which image to show first
             const isCurrentUIinDarkMode = body.classList.contains('dark-mode');
 
             // Set the correct first image for the 5s transition based on CURRENT UI theme
             if (isCurrentUIinDarkMode) {
                 // If UI is dark, image-two (light fabricator) should be the one to start from.
                 // It will transition to image-one (dark fabricator) for 5s.
-                body.classList.add('image-transition'); // Make image-two visible
+                body.classList.add('image-transition'); // Make image-two visible (it's the 'default' for dark UI)
                 body.classList.remove('show-explore-image-one'); // Ensure image-one is hidden
             } else {
                 // If UI is light, image-one (dark fabricator) should be the one to start from.
@@ -255,14 +254,14 @@
                 // This section triggers the 5-second image transition (flip)
                 if (isCurrentUIinDarkMode) {
                     // If started with image-two (light), flip to image-one (dark)
-                    body.classList.remove('image-transition');
-                    body.classList.add('show-explore-image-one'); // Ensure image-one is shown for 5s transition
+                    body.classList.remove('image-transition'); // Make image-one visible
+                    body.classList.add('show-explore-image-one');
                 } else {
                     // If started with image-one (dark), flip to image-two (light)
-                    body.classList.remove('show-explore-image-one'); // Ensure image-one is hidden
-                    body.classList.add('image-transition'); // Make image-two visible for 5s transition
+                    body.classList.remove('show-explore-image-one'); // Make image-one hidden
+                    body.classList.add('image-transition'); // Make image-two visible
                 }
-            }, 1000); // This happens 1s after the current setTimeout (total 2s from Explore click)
+            }, 1000); // This happens 1s after the previous setTimeout (total 2s from Explore click)
 
             // Remove the 'in-explore-transition' class after the full 5-second image transition
             setTimeout(() => {
