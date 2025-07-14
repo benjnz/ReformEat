@@ -236,15 +236,16 @@
             // Determine the current UI theme to decide which image to show first
             const isCurrentUIinDarkMode = body.classList.contains('dark-mode');
 
-            body.classList.remove('image-transition'); // Ensure image-one is visible
-            body.classList.add('show-explore-image-one'); // Explicitly show image-one
+                body.classList.remove('image-transition'); // Ensure image-one is visible
+                body.classList.add('show-explore-image-one'); // Explicitly show image-one
             
 
             // Then, 1 second after this initial image is shown, trigger the flip to the other image.
             setTimeout(() => {
-            body.classList.remove('show-explore-image-one'); // Make image-one hidden
-            body.classList.add('image-transition'); // Make image-two visible
-                }
+                    // If started with image-one (dark), flip to image-two (light)
+                    body.classList.remove('show-explore-image-one'); // Make image-one hidden
+                    body.classList.add('image-transition'); // Make image-two visible
+
             }, 1000); // This happens 1s after the previous setTimeout (total 2s from Explore click)
 
             // Remove the 'in-explore-transition' class after the full 5-second image transition
