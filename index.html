@@ -150,7 +150,7 @@
     const initialContentWrapper = document.getElementById('initial-content-wrapper');
     const newContentWrapper = document.getElementById('new-content-wrapper'); // Contains FDI button
 
-    // --- Helper Function to set Image Visibility based on Theme ---
+    // --- Helper Function to set Image Visibility based on Theme (for general toggle) ---
     function setImageVisibilityForTheme(isDarkMode, isQuickTransition = false) {
         if (isQuickTransition) {
             body.classList.add('quick-image-transition'); // Apply quick transition for images
@@ -217,6 +217,7 @@
 
     // --- Explore Button & Content Transition Logic ---
     exploreButton.addEventListener('click', function() {
+        // Prevent multiple clicks during the transition
         if (body.classList.contains('in-explore-transition') || body.classList.contains('show-new-content')) {
             return;
         }
@@ -229,29 +230,44 @@
         // Ensure quick-image-transition is NOT active for this sequence
         body.classList.remove('quick-image-transition');
 
-        // 2. After initial content disappears (1 second), start UI theme change and image transitions
+        // 2. After initial content disappears (1 second), start image transitions
         setTimeout(() => {
             document.body.classList.add('show-new-content'); // Show new content wrapper
 
-            // Trigger the 5-second UI dark-to-light transition
-            applyUITheme(false); // Switch UI to light mode over 5 seconds (CSS handles this)
+            // Determine the current UI theme
+            const isCurrentUIinDarkMode = body.classList.contains('dark-mode');
 
-            // At this point, hero background is gone, initial content is gone.
-            // We need to show image-one from fullscreen-image-container.
-            body.classList.remove('image-transition'); // Ensure image-one is showing from fullscreen-image-container
-            body.classList.add('show-explore-image-one'); // Make image-one visible (dark fabricator)
+            // Set the correct first image for the 5s transition based on CURRENT UI theme
+            if (isCurrentUIinDarkMode) {
+                // If UI is dark, image-two (light fabricator) should be the one to start from.
+                // It will transition to image-one (dark fabricator) for 5s.
+                body.classList.add('image-transition'); // Make image-two visible
+                body.classList.remove('show-explore-image-one'); // Ensure image-one is hidden
+            } else {
+                // If UI is light, image-one (dark fabricator) should be the one to start from.
+                // It will transition to image-two (light fabricator) for 5s.
+                body.classList.remove('image-transition'); // Ensure image-one is visible
+                body.classList.add('show-explore-image-one'); // Explicitly show image-one
+            }
 
-            // Then, 1 second after image-one shows (2 seconds from explore click total), trigger transition to image-two
+            // Then, 1 second after this initial image is shown, trigger the flip to the other image.
             setTimeout(() => {
-                body.classList.remove('show-explore-image-one'); // No longer need this class to force it visible
-                body.classList.add('image-transition'); // This makes image-one fade out, image-two fade in (over 5s)
-            }, 1000); // This delay is for image-one to be visible for 1s before image-two fades in.
+                // This section triggers the 5-second image transition (flip)
+                if (isCurrentUIinDarkMode) {
+                    // If started with image-two (light), flip to image-one (dark)
+                    body.classList.remove('image-transition');
+                    body.classList.add('show-explore-image-one'); // Ensure image-one is shown for 5s transition
+                } else {
+                    // If started with image-one (dark), flip to image-two (light)
+                    body.classList.remove('show-explore-image-one'); // Ensure image-one is hidden
+                    body.classList.add('image-transition'); // Make image-two visible for 5s transition
+                }
+            }, 1000); // This happens 1s after the current setTimeout (total 2s from Explore click)
 
-            // Remove the 'in-explore-transition' class after the full 5-second UI/image transition
-            // This 5-second timer starts from when applyUITheme(false) and show-explore-image-one are called.
+            // Remove the 'in-explore-transition' class after the full 5-second image transition
             setTimeout(() => {
                 body.classList.remove('in-explore-transition');
-            }, 5000); // 5 seconds for the main UI/image transitions
+            }, 5000); // This is the total duration for the image transition AFTER its initial setup
         }, 1000); // This delay is exactly when initial-content and hero-background finish fading out.
     });
 });
