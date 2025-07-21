@@ -237,6 +237,7 @@ body.dark-mode .menu a {
     justify-content: center; /* Horizontally center the button */
     align-items: center; /* Vertically center the button if needed */
     margin-top: 500px; /* Add some space above the button */
+    z-index: 100;
 }
 
 .fdi-button-container button {
