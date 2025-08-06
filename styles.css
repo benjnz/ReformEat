@@ -232,26 +232,6 @@ body.dark-mode .menu a {
     background-color: darkgreen;
 }
 
-.fdi-button-container {
-    display: flex;
-    justify-content: center; /* Horizontally center the button */
-    align-items: center; /* Vertically center the button if needed */
-    margin-top: 500px; /* Add some space above the button */
-    z-index: 100;
-}
-
-.fdi-button-container button {
-    font-family: "Eina Semi Bold", Arial, sans-serif;
-    font-size: 1vw;
-    align-items: center; /* Vertically center the button if needed */
-    margin-top: 20px; /* Add some space above the button */
-    background-color: #00000000;
-    color: #ffffff;
-    padding: 1vw 2vw; /* Adjust padding as needed */
-    text-decoration: none; /* Remove underline from the link */
-    border-radius: 25px; /* Adjust for more or less rounded corners */
-    border: 0.5vw solid #00cb31; /* Add a 2px solid white border */
-}
 .dark-mode .fdi-button-container button {
     color: #000000;
     
@@ -627,7 +607,7 @@ body.show-new-content .new-content-wrapper {
 /* Initial content wrapper, set its position and z-index */
 .initial-content-wrapper {
     position: relative; /* Or absolute, depending on your layout */
-    z-index: 1; /* Ensure it's on top initially */
+    z-index: -10; /* Ensure it's on top initially */
     opacity: 1;
     transition: opacity 1s ease-in-out; /* Add transition for fading out */
 }
@@ -663,6 +643,20 @@ body.hide-initial-content .initial-content-wrapper {
     width: 210vw;
     object-fit: cover;
     display: block;
+}
+
+    
+/* The container for the button */
+.fdi-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80%;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    /* Crucial for proper stacking context */
+    position: relative;
+    z-index: 100;
+    
 }
 
 }
@@ -862,9 +856,133 @@ padding-bottom: 6%;
     margin-top:170px;
 }
 
+
+    
+
 .fdi-button-container button {
     margin-top: 175px;
 
     
 }
+}
+
+/* The container for the button */
+.fdi-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40%;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    /* Crucial for proper stacking context */
+    position: relative;
+    z-index: 100;
+    
+}
+
+/* The button itself (which is an anchor tag) */
+.fdi-button-link-wrapper {
+    /* Styles for the button's appearance */
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    display: inline-block;
+    padding: 1vw 2vw;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 0.5vw solid #2e2e2e;
+    cursor: pointer;
+    /* Color styles (default for light mode) */
+    background-color: #00cb31;
+    color: #000000;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    /* Hover effect */
+    transition: background-color 0.3s ease;
+}
+
+.light-mode .fdi-button-link-wrapper {
+    border: 0.5vw solid #00cb31;
+    color: #00cb31;
+    background-color: #ffffff00;
+}
+
+/* Dark mode specific color change */
+.dark-mode .fdi-button-link-wrapper {
+    color: #ffffff;
+    border: 0.5vw solid #2e2e2e;
+    background-color: #00cb31;
+
+}
+
+/* Hover effect */
+.fdi-button-link-wrapper:hover {
+    background-color: darkgreen;
+}
+
+/* --- New Content Wrapper (contains FDI button) --- */
+.new-content-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    
+    /* Give the wrapper a very high z-index by default to ensure it starts behind everything */
+    z-index: -2;
+}
+
+/* State when new content is active: visible and opaque */
+body.show-new-content .new-content-wrapper {
+    opacity: 1;
+    visibility: visible;
+    
+    /*
+    * This is the crucial change.
+    * Give the new content wrapper a higher z-index than the images and other content
+    * to ensure it sits on top. We'll use 15, which is lower than the menu (z-index: 10),
+    * but higher than the image containers (-1, -10) and other page content (0).
+    * Make sure this is higher than the fullscreen-image-container's z-index.
+    */
+    z-index: 1;
+}
+
+/* --- Fullscreen Image Container Styling --- */
+.fullscreen-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    
+    /* Make sure these are low, or the images will block the button. */
+    z-index: 5;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+
+    
+/* The container for the button */
+.fdi-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80%;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    /* Crucial for proper stacking context */
+    position: relative;
+    z-index: 100;
+    
+}
+
 }
