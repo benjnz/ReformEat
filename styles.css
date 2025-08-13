@@ -447,7 +447,7 @@ body.dark-mode {
 }
 
 .dark-mode .fdi-button-link{
-    border: 1vw solid #00cb31; /* Add a 2px solid white border */    
+    border: 1vw solid #00cb31; /* Add a 2px solid white border */ 
     }
 .dark-mode .fdi-button-container button {
     font-size: 4vw;
@@ -899,7 +899,7 @@ padding-bottom: 6%;
 }
 
 .light-mode .fdi-button-link-wrapper {
-    border: 0.5vw solid #00cb31;
+    border: 1vw solid #00cb31;
     color: #00cb31;
     background-color: #ffffff00;
 }
@@ -907,8 +907,8 @@ padding-bottom: 6%;
 /* Dark mode specific color change */
 .dark-mode .fdi-button-link-wrapper {
     color: #ffffff;
-    border: 0.5vw solid #2e2e2e;
-    background-color: #00cb31;
+    border: 1vw solid #04cb30;
+    background-color: #848485;
 
 }
 
@@ -985,4 +985,28 @@ body.show-new-content .new-content-wrapper {
     
 }
 
+    /* The button itself (which is an anchor tag) */
+.fdi-button-link-wrapper {
+    /* Styles for the button's appearance */
+    font-family: "Eina Semi Bold", Arial, sans-serif;
+    font-size: 4vw;
+    display: inline-block;
+    padding: 1vw 2vw;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 0.5vw solid #2e2e2e;
+    cursor: pointer;
+    /* Color styles (default for light mode) */
+    background-color: #00cb31;
+    color: #000000;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    /* Hover effect */
+    transition: background-color 0.3s ease;
+}
+    
+}
+
+body.light-mode.loaded.dark-mode {
+    z-index: -1;
 }
